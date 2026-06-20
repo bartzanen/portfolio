@@ -1,4 +1,5 @@
 import type { Portfolio } from "@/types/portfolio";
+import { url } from "inspector";
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -16,18 +17,23 @@ export const portfolio: Portfolio = {
   seo: {
     title: "Bart Zanen — Full-Stack Software Engineer",
     description:
-      "Backend and platform engineer building reliable distributed systems. Currently shipping developer tooling and event-driven infrastructure in Go and TypeScript.",
+      "Bart Zanen — full-stack developer building AI-powered web apps. Explore projects, experience, and skills spanning React, Python, and ML",
     // Set this to your deployed domain so Open Graph links resolve correctly.
     url: "https://bartzanen.com/",
     // 1200×630 image used for link previews. Drop a file in /public and
     // reference it with an absolute URL once deployed, or use a hosted image.
-    ogImage: "/public/ogimage.jpeg",
+    ogImage: "https://bartzanen.com/ogimage.jpeg",
     keywords: [
-      "backend engineer",
-      "platform engineering",
-      "Go",
+      "Bart Zanen",
+      "full-stack developer",
+      "software engineer",
+      "AI engineer",
+      "machine learning",
+      "React developer",
+      "Python developer",
       "TypeScript",
-      "Kubernetes",
+      "Barcelona software engineer",
+      "web developer portfolio",
     ],
   },
 
@@ -35,8 +41,7 @@ export const portfolio: Portfolio = {
     // Small monospace line above the name. Omit to hide.
     name: "Bart Zanen",
     headline: "Full-Stack Software Engineer",
-    tagline:
-      "I design and run the systems other engineers build on — event pipelines, internal platforms, and APIs that stay boring at 3 a.m.",
+    eyebrow: "Based in Coppenhagen",
     cta: {
       label: "See my work",
       href: "#projects", // anchors scroll smoothly; mailto: and https:// also work
@@ -46,178 +51,295 @@ export const portfolio: Portfolio = {
 
   about: {
     paragraphs: [
-      "I'm a backend engineer with eight years of experience turning ambiguous product ideas into systems that survive contact with production. My happy place is the layer between application code and infrastructure: message queues, service boundaries, schema design, and the tooling that lets a team ship without fear.",
-      "Most recently I led the platform team at a logistics scale-up, where we replaced a nightly batch monolith with an event-driven architecture processing around 40M events a day. Before that I helped two early-stage startups find product-market fit by keeping their backends simple enough to change weekly.",
-      "Outside of work I maintain a couple of small open-source tools, mentor early-career engineers through a local coding school, and spend too much time tuning my home server.",
+      "I'm a software engineer who likes building things end to end, from the database up to the interface someone actually clicks on. My happy place is full-stack web development, especially when AI is part of the stack. I've spent the last couple of years getting hands-on experience building AI-adjacent tooling, which I think is becoming essential in this field.",
+      "While studying Computer Science at UPC in Barcelona, I spent six months on exchange in Bergen, Norway. After it ended, I chose to stay a while longer, finishing my thesis remotely and working as a Head Waiter leading a team at a high-volume restaurant to support myself in the meantime.",
+      "Once I wrapped up my degree, I took a few months to backpack through Southeast Asia, meeting people building all kinds of remote and independent careers along the way. I came back wanting to keep on learning and building, and curious about where I would end up next",
     ],
     // Short facts shown as a compact side list. Omit or empty to hide.
     highlights: [
-      "Computer Engineering graduate @FIB - UPC",
-      "AI in production",
-      "Led teams of 3–7 engineers",
-      "OSS maintainer",
-      "Based in Turin, Italy",
+      "Full-stack development",
+      "Trained & deployed ML models",
+      "Led teams under pressure",
+      "AI-adjacent tooling",
+      "5 languages spoken",
+      "Fast learner, fast mover",
     ],
   },
 
   skills: [
     {
       title: "Languages",
-      skills: ["TypeScript", "JavaScript", "Python", "C++", "SQL"],
+      skills: ["TypeScript", "JavaScript", "Python", "C++", "C", "SQL"],
+    },
+    {
+      title: "Frontend & Mobile",
+      skills: [
+        "React",
+        "Next.js",
+        "Expo",
+        "React Native",
+        "Tailwind CSS",
+        "Zustand",
+        "Redux",
+        "TanStack Query",
+      ],
     },
     {
       title: "Backend & Data",
       skills: [
+        "Django",
+        "NestJS",
         "PostgreSQL",
-        "Kafka",
+        "SQLite",
+        "FastAPI",
         "Redis",
-        "gRPC",
         "REST APIs",
-        "Event sourcing",
       ],
     },
     {
-      title: "Infrastructure",
+      title: "AI/ML",
+      skills: ["Core ML", "MLX", "OpenAI API", "Anthropic API", "Hugging Face"],
+    },
+    {
+      title: "Tools & Platforms",
       skills: [
-        "Kubernetes",
-        "Terraform",
-        "AWS",
+        "Git",
         "Docker",
+        "Supabase",
+        "Firebase",
         "GitHub Actions",
-        "Observability (Grafana, OTel)",
+        "Figma",
       ],
     },
     {
-      title: "Practices",
+      title: "Spoken languages",
       skills: [
-        "System design",
-        "Incident response",
-        "Tech leadership",
-        "Mentoring",
+        "English · C2",
+        "Spanish · C2",
+        "Dutch · C2",
+        "Catalan · C2",
+        "Italian · B1",
       ],
     },
   ],
 
   projects: [
     {
-      title: "Relay — event pipeline toolkit",
+      title: "Dici",
       description:
-        "An open-source Go library for building exactly-once event pipelines on top of Kafka, with first-class support for schema evolution and replay. Used in production by a handful of small teams.",
-      tags: ["Go", "Kafka", "Open source"],
-      githubUrl: "https://github.com/mayalindqvist/relay",
-      // No imageUrl here on purpose — this card demonstrates the placeholder.
+        "A personal Italian tutor powered by a fine-tuned Qwen 3.5 4B model (MLX). Supports natural conversation practice, real-time grammar correction, and vocabulary explanations through a custom Next.js interface.",
+      tags: [
+        "Python",
+        "TypeScript",
+        "Next.js",
+        "MLX",
+        "LLM Fine-tuning",
+        "Prompt Engineering",
+        "Qwen",
+      ],
+      githubUrls: [
+        {
+          url: "https://github.com/bartzanen/dici",
+          repoType: "ML Model",
+        },
+        {
+          url: "https://github.com/bartzanen/dici-frontend",
+          repoType: "Frontend",
+        },
+        {
+          url: "https://github.com/bartzanen/dici-backend",
+          repoType: "Backend",
+        },
+      ],
       featured: true,
     },
     {
-      title: "Fleetboard",
+      title: "Journii",
       description:
-        "Real-time logistics dashboard that tracks 2,000+ vehicles with sub-second updates. I built the ingestion layer and the WebSocket fan-out service.",
-      tags: ["TypeScript", "WebSockets", "PostgreSQL", "Redis"],
-      liveUrl: "https://fleetboard.example.com",
-      imageUrl:
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=80",
+        "A social platform for Erasmus students, combining a social feed, event discovery, and connections to help students meet others nearby and make the most of their exchange. Being built as a mobile app and webapp with a friend, currently in early development.",
+      tags: [
+        "React Native",
+        "Expo",
+        "Next.js",
+        "Supabase",
+        "Mobile",
+        "Social Platform",
+      ],
+      githubUrls: [
+        {
+          url: "https://github.com/journii-app/journii-mobile",
+          repoType: "Mobile",
+        },
+        {
+          url: "https://github.com/journii-app/journii-web",
+          repoType: "Web",
+        },
+      ],
     },
     {
-      title: "tf-drift",
+      title: "AiGile 2.0",
       description:
-        "A tiny CLI that detects Terraform state drift on a schedule and posts a human-readable diff to Slack before it becomes an incident.",
-      tags: ["Go", "Terraform", "CLI"],
-      githubUrl: "https://github.com/mayalindqvist/tf-drift",
-      liveUrl: "https://tf-drift.dev",
-      imageUrl:
-        "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1200&q=80",
+        "My Bachelor's thesis at UPC — the second iteration of AiGILE, an AI-powered educational platform for teaching agile methodologies in a university Software Project Management course.",
+      tags: ["Django", "OpenAI API", "PostgreSQL", "Docker", "Education"],
+      githubUrls: [
+        {
+          url: "https://github.com/marcoriol/AIGILE",
+          repoType: "Code",
+        },
+      ],
     },
     {
-      title: "Queue depth simulator",
+      title: "Pulmón Urbano",
       description:
-        "Interactive notebook + web demo for reasoning about queueing theory in service design: arrival rates, utilization, and why p99 explodes at 80% load.",
-      tags: ["Python", "Education", "Data viz"],
-      githubUrl: "https://github.com/mayalindqvist/queue-sim",
+        "A mobile app for athletes in Barcelona. Combines a real-time air quality map with route planning that favors cleaner-air paths, plus social features like activity tracking, a community feed, friends, and chat. Built with React Native/Expo and a Django backend, integrating OSRM for routing and Barcelona's open air-quality data API.",
+      tags: [
+        "React Native",
+        "Expo",
+        "Django",
+        "PostgreSQL",
+        "Firebase",
+        "OSRM",
+        "API",
+      ],
+      githubUrls: [
+        {
+          url: "https://github.com/pes2425q1-1-gei-upc/Pulmon-Urbano-Frontend",
+          repoType: "Frontend",
+        },
+        {
+          url: "https://github.com/pes2425q1-1-gei-upc/Pulmon-Urbano-Backend",
+          repoType: "Backend",
+        },
+      ],
+      imageUrl: "/pulmonurbano.png",
+    },
+    {
+      title: "BartInBarcelona",
+      description:
+        "The official website for my bike tour guide business in Barcelona. A simple, fast-loading site covering tour listings, booking, and contact info, built from scratch with PHP and CSS. A past project, since I'm no longer running the tours.",
+      tags: ["PHP", "CSS", "Web Design"],
+      liveUrl: "",
+      githubUrls: [
+        {
+          url: "https://github.com/bartzanen/BartInBarcelona",
+          repoType: "Code",
+        },
+      ],
+      imageUrl: "/bartinbarcelona.png",
     },
   ],
 
   experience: [
     {
-      role: "Staff Engineer, Platform",
-      company: "Cargolane",
-      companyUrl: "https://example.com/cargolane",
-      period: "2022 — Present",
-      location: "Turin, IT (hybrid)",
+      role: "Head Waiter",
+      company: "Villa Paradiso",
+      companyUrl: "https://www.villaparadiso.no/",
+      period: "Apr 2025 — Jan 2026",
+      location: "Bergen, NO",
       achievements: [
-        "Led the migration from a nightly batch monolith to an event-driven platform handling ~40M events/day with 99.95% delivery SLO.",
-        "Cut median deploy time from 45 minutes to 6 by rebuilding CI/CD on reusable GitHub Actions workflows.",
-        "Grew the platform team from 2 to 6 engineers; introduced lightweight design docs and blameless incident reviews.",
+        "Led and coordinated a waitstaff team in a high-volume restaurant serving 150+ guests simultaneously.",
+        "Managed reservations, guest requests, and table coordination, keeping service running smoothly under nightly pressure.",
+        "Trained and onboarded new staff on service procedures, helping maintain consistent standards across the team.",
+        "Collaborated cross-functionally with kitchen and bar teams to streamline communication and improve guest experience.",
       ],
     },
     {
-      role: "Senior Backend Engineer",
-      company: "Nordpay",
-      period: "2019 — 2022",
-      location: "Stockholm, SE",
+      role: "Junior Full-Stack Developer",
+      company: "Rosepetal",
+      companyUrl: "https://www.rosepetal.ai/",
+      period: "Apr 2024 — Jan 2025",
+      location: "Sabadell, ES",
       achievements: [
-        "Owned the payments reconciliation service (Go + PostgreSQL), reducing unmatched transactions by 70%.",
-        "Designed the public partner API and its versioning strategy, now used by 30+ integrators.",
-        "Ran the on-call rotation revamp that halved pages per week without lowering coverage.",
+        "Built an AI-assisted dataset labeling tool integrated into the internal editor, improving labeling efficiency by 35%.",
+        "Developed and improved software for AI-driven quality control systems, supporting automated defect detection and process monitoring on industrial production lines.",
+        "Identified and resolved performance bottlenecks across the application, improving responsiveness and overall system stability.",
       ],
     },
     {
-      role: "Backend Engineer",
-      company: "Studio Mela",
-      period: "2017 — 2019",
-      location: "Remote",
+      role: "Tour Guide",
+      company: "Self-Employed",
+      period: "May 2024 — Sep 2024",
+      location: "Barcelona, ES",
       achievements: [
-        "First backend hire; built the original API, auth, and billing for a B2B SaaS that reached 200 paying teams.",
-        "Introduced automated testing and review practices that took the team from zero tests to 80% coverage on core paths.",
+        "Built and ran an end-to-end bike tour business, handling bookings, payments, scheduling, and customer communication.",
+        "Led tours for groups of up to 10, adapting routes and storytelling to different group sizes and interests.",
+        "Maintained a 5-star customer rating across the season by tailoring each tour to guest interests.",
+      ],
+    },
+    {
+      role: "Team Coordinator",
+      company: "FieldHockeyTravel.com",
+      companyUrl:
+        "https://www.fieldhockeytravel.com/pg-28957-7-114462/pagina/home.html",
+      period: "Feb 2023 — Feb 2024",
+      location: "Barcelona, ES",
+      achievements: [
+        "Coordinated transportation and logistics for international hockey teams, including airport transfers and bus schedules.",
+        "Acted as the main point of contact between drivers, venues, and event organizers to prevent delays during tournaments.",
+        "Provided on-the-ground assistance and recommendations to visiting teams throughout their stay.",
       ],
     },
   ],
 
   education: [
     {
-      degree: "MSc, Computer Science & Engineering",
-      institution: "Politecnico di Torino",
-      period: "2015 — 2017",
+      degree: "Bachelor's Degree in Computer Science (Software Engineering)",
+      institution: "Universitat Politècnica de Catalunya (UPC)",
+      period: "Sep 2021 — Jan 2026",
       detail:
-        "Thesis on backpressure strategies in distributed stream processing.",
+        "Thesis: AiGile 2.0, an AI-powered tool for learning agile methodologies.",
     },
     {
-      degree: "BSc, Computer Engineering",
-      institution: "Politecnico di Torino",
-      period: "2012 — 2015",
+      degree: "Erasmus Exchange",
+      institution: "Universitetet i Bergen (UiB)",
+      period: "Jan 2025 — Jun 2025",
+      detail: "Coursework in Machine Learning and Web Development.",
+    },
+    {
+      degree: "Talent Program, Bojos per les Noves Tecnologies",
+      institution: "Fundació Catalunya — La Pedrera",
+      period: "2020 — 2021",
+      detail:
+        "Selective program for secondary students in programming, robotics, and applied digital technology.",
     },
   ],
 
   contact: {
-    email: "hello@mayalindqvist.dev",
-    location: "Turin, Italy · CET (UTC+1)",
+    email: "bartszanen@gmail.com",
+    location: "Copenhagen, DE · CET (UTC+1)",
     availability: {
       // "available" (green) | "limited" (amber) | "unavailable" (gray)
-      status: "limited",
-      label: "Open to staff/principal roles from September",
+      status: "available",
+      label: "Open to full-time roles",
     },
-    note: "The fastest way to reach me is email — I reply within a day or two.",
+    note: "Always happy to talk about new opportunities, feel free to reach out",
   },
 
   socialLinks: [
     {
       platform: "github",
       label: "GitHub",
-      url: "https://github.com/mayalindqvist",
+      url: "https://github.com/bartzanen",
     },
     {
       platform: "linkedin",
       label: "LinkedIn",
-      url: "https://linkedin.com/in/mayalindqvist",
+      url: "https://www.linkedin.com/in/bart-sebastiaan-zanen",
     },
     {
-      platform: "mastodon",
-      label: "Mastodon",
-      url: "https://hachyderm.io/@maya",
+      platform: "whatsapp",
+      label: "WhatsApp",
+      url: "https://wa.me/34674761307",
     },
     {
-      platform: "rss",
-      label: "Blog / RSS",
-      url: "https://mayalindqvist.dev/feed.xml",
+      platform: "calendly",
+      label: "Calendly",
+      url: "https://calendly.com/bartszanen/30min",
+    },
+    {
+      platform: "cv",
+      label: "CV",
+      url: "/Bart_Zanen_CV.pdf",
     },
   ],
 };
