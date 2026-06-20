@@ -41,7 +41,7 @@ export const portfolio: Portfolio = {
     // Small monospace line above the name. Omit to hide.
     name: "Bart Zanen",
     headline: "Full-Stack Software Engineer",
-    eyebrow: "Based in Coppenhagen",
+    eyebrow: "Based in Copenhagen",
     cta: {
       label: "See my work",
       href: "#projects", // anchors scroll smoothly; mailto: and https:// also work
@@ -306,7 +306,7 @@ export const portfolio: Portfolio = {
 
   contact: {
     email: "bartszanen@gmail.com",
-    location: "Copenhagen, DE · CET (UTC+1)",
+    location: "Copenhagen, DK · CET (UTC+1)",
     availability: {
       // "available" (green) | "limited" (amber) | "unavailable" (gray)
       status: "available",
