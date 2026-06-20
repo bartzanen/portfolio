@@ -10,13 +10,10 @@
 export type SocialPlatform =
   | "github"
   | "linkedin"
-  | "twitter"
-  | "mastodon"
-  | "dribbble"
-  | "youtube"
-  | "instagram"
+  | "whatsapp"
   | "website"
-  | "rss"
+  | "calendly"
+  | "cv"
   | "other";
 
 export interface SocialLink {
@@ -43,6 +40,8 @@ export interface Hero {
     /** Anchor ("#projects"), mailto, or external URL. */
     href: string;
   };
+  /** Portrait photo — path under /public or an absolute URL. Omit to hide. */
+  portrait?: string;
 }
 
 export interface About {
@@ -62,6 +61,11 @@ export interface SkillGroup {
   skills: string[];
 }
 
+export type GitHubRepo = {
+  url: string;
+  repoType: string;
+};
+
 export interface Project {
   title: string;
   /** 1–3 sentence summary of what the project is and why it matters. */
@@ -71,7 +75,7 @@ export interface Project {
   /** Link to the running product/demo. Omit to hide the "Live" button. */
   liveUrl?: string;
   /** Link to the source code. Omit to hide the "Code" button. */
-  githubUrl?: string;
+  githubUrls?: GitHubRepo[];
   /**
    * Screenshot or cover image (absolute URL or a path under /public).
    * When omitted, a neutral placeholder is rendered instead.

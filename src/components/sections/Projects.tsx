@@ -64,7 +64,7 @@ function ProjectCard({ project }: { project: Project }) {
             </ul>
           )}
 
-          {(project.liveUrl || project.githubUrl) && (
+          {(project.liveUrl || project.githubUrls) && (
             <div className="mt-1 flex gap-2">
               {project.liveUrl && (
                 <a
@@ -77,17 +77,19 @@ function ProjectCard({ project }: { project: Project }) {
                   Live
                 </a>
               )}
-              {project.githubUrl && (
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-700 transition-colors hover:border-teal-600/50 hover:text-teal-700 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-teal-400/50 dark:hover:text-teal-400"
-                >
-                  <Github className="h-3.5 w-3.5" aria-hidden="true" />
-                  Code
-                </a>
-              )}
+              {project.githubUrls &&
+                project.githubUrls.map((githubUrl) => (
+                  <a
+                    key={githubUrl.repoType}
+                    href={githubUrl.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-700 transition-colors hover:border-teal-600/50 hover:text-teal-700 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-teal-400/50 dark:hover:text-teal-400"
+                  >
+                    <Github className="h-3.5 w-3.5" aria-hidden="true" />
+                    {githubUrl.repoType}
+                  </a>
+                ))}
             </div>
           )}
         </div>
