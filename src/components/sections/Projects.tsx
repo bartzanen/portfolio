@@ -64,7 +64,10 @@ function ProjectCard({ project }: { project: Project }) {
             </ul>
           )}
 
-          {(project.liveUrl || project.githubUrl) && (
+          {(project.liveUrl ||
+            project.githubUrl ||
+            project.githubUrlBackend ||
+            project.githubUrlFrontend) && (
             <div className="mt-1 flex gap-2">
               {project.liveUrl && (
                 <a
@@ -86,6 +89,28 @@ function ProjectCard({ project }: { project: Project }) {
                 >
                   <Github className="h-3.5 w-3.5" aria-hidden="true" />
                   Code
+                </a>
+              )}
+              {project.githubUrlFrontend && (
+                <a
+                  href={project.githubUrlFrontend}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-700 transition-colors hover:border-teal-600/50 hover:text-teal-700 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-teal-400/50 dark:hover:text-teal-400"
+                >
+                  <Github className="h-3.5 w-3.5" aria-hidden="true" />
+                  Frontend
+                </a>
+              )}
+              {project.githubUrlBackend && (
+                <a
+                  href={project.githubUrlBackend}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-700 transition-colors hover:border-teal-600/50 hover:text-teal-700 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-teal-400/50 dark:hover:text-teal-400"
+                >
+                  <Github className="h-3.5 w-3.5" aria-hidden="true" />
+                  Backend
                 </a>
               )}
             </div>

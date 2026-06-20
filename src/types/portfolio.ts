@@ -10,13 +10,10 @@
 export type SocialPlatform =
   | "github"
   | "linkedin"
-  | "twitter"
-  | "mastodon"
-  | "dribbble"
-  | "youtube"
-  | "instagram"
+  | "whatsapp"
   | "website"
-  | "rss"
+  | "calendly"
+  | "cv"
   | "other";
 
 export interface SocialLink {
@@ -74,6 +71,8 @@ export interface Project {
   liveUrl?: string;
   /** Link to the source code. Omit to hide the "Code" button. */
   githubUrl?: string;
+  githubUrlFrontend?: string;
+  githubUrlBackend?: string;
   /**
    * Screenshot or cover image (absolute URL or a path under /public).
    * When omitted, a neutral placeholder is rendered instead.

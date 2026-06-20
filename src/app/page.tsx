@@ -15,7 +15,16 @@ function hasItems<T>(arr: T[] | undefined): arr is T[] {
 }
 
 export default function Page() {
-  const { hero, about, skills, projects, experience, education, contact, socialLinks } = portfolio;
+  const {
+    hero,
+    about,
+    skills,
+    projects,
+    experience,
+    education,
+    contact,
+    socialLinks,
+  } = portfolio;
 
   // Each section renders only when its data exists — and the header nav
   // mirrors exactly the sections that are visible.
@@ -38,7 +47,7 @@ export default function Page() {
 
   return (
     <>
-      <Header brand={hero.eyebrow ?? hero.name} items={navItems} />
+      <Header brand={hero.name} items={navItems} />
 
       <main>
         <Hero data={hero} />
