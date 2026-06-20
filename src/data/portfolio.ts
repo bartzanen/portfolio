@@ -41,6 +41,7 @@ export const portfolio: Portfolio = {
       label: "See my work",
       href: "#projects", // anchors scroll smoothly; mailto: and https:// also work
     },
+    portrait: "/portrait.PNG",
   },
 
   about: {

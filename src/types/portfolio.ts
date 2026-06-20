@@ -43,6 +43,8 @@ export interface Hero {
     /** Anchor ("#projects"), mailto, or external URL. */
     href: string;
   };
+  /** Portrait photo — path under /public or an absolute URL. Omit to hide. */
+  portrait?: string;
 }
 
 export interface About {
