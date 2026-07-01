@@ -46,12 +46,12 @@ src/
     ├── motion/Reveal.tsx # Reveal / Stagger / HoverLift primitives
     ├── ui/Section.tsx    # Section shell + Tag pill
     └── sections/         # Hero, About, Skills, Projects, Experience,
-                          # Education, Contact, SocialLinks
+                          # Education, Certificates, Contact, SocialLinks
 ```
 
 ## Configuration reference (`src/data/portfolio.ts`)
 
-The config exports a single `Portfolio` object. Sections appear in this fixed order: **Hero → About → Skills → Projects → Experience → Education → Contact → Social Links**. Every section except Hero is optional.
+The config exports a single `Portfolio` object. Sections appear in this fixed order: **Hero → About → Skills → Projects → Experience → Education → Certificates → Contact → Social Links**. Every section except Hero is optional.
 
 ### `seo` (required)
 
@@ -148,6 +148,32 @@ Work history, newest first; `[]` hides the section.
 | `institution` | `string` | ✅ | School/university name. |
 | `period` | `string` | ✅ | Free-form date range. |
 | `detail` | `string` | — | Extra line: thesis topic, honors, etc. |
+
+### `certificates` (optional)
+
+Certificates and digital badges (Credly, Coursera, freeCodeCamp, cloud certs, …); `[]` hides the section. Each entry is a card in a two-column grid.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `title` | `string` | ✅ | Certificate/badge name, e.g. `"AWS Certified Cloud Practitioner"`. |
+| `issuer` | `string` | ✅ | Issuing organization, e.g. `"Amazon Web Services"` or `"DeepLearning.AI · Coursera"`. |
+| `date` | `string` | — | Free-form date earned, e.g. `"Mar 2024"` or `"2023"`. |
+| `credentialId` | `string` | — | Credential/verification ID, shown as a small monospace line. |
+| `credentialUrl` | `string` | — | Verification/badge link. When present, adds a "Verify credential" link. |
+| `imageUrl` | `string` | — | Badge image (`/public` path or absolute URL), rendered as a small square thumbnail — ideal for Credly-style badges. **When omitted, a neutral award icon is shown** so cards never look broken. |
+| `tags` | `string[]` | — | Skill/topic pills shown on the card. |
+
+```ts
+certificates: [
+  {
+    title: "Machine Learning Specialization",
+    issuer: "DeepLearning.AI · Coursera",
+    date: "2025",
+    credentialUrl: "https://coursera.org/verify/specialization/XXXXXXXX",
+    tags: ["Machine Learning", "Python"],
+  },
+]
+```
 
 ### `contact` (optional)
 
