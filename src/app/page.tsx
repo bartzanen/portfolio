@@ -6,6 +6,7 @@ import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
 import { Experience } from "@/components/sections/Experience";
 import { Education } from "@/components/sections/Education";
+import { Certificates } from "@/components/sections/Certificates";
 import { Contact } from "@/components/sections/Contact";
 import { SocialLinks } from "@/components/sections/SocialLinks";
 
@@ -22,6 +23,7 @@ export default function Page() {
     projects,
     experience,
     education,
+    certificates,
     contact,
     socialLinks,
   } = portfolio;
@@ -33,6 +35,7 @@ export default function Page() {
   const showProjects = hasItems(projects);
   const showExperience = hasItems(experience);
   const showEducation = hasItems(education);
+  const showCertificates = hasItems(certificates);
   const showContact = !!contact?.email;
   const showSocial = hasItems(socialLinks);
 
@@ -42,6 +45,7 @@ export default function Page() {
     showProjects && { id: "projects", label: "Projects" },
     showExperience && { id: "experience", label: "Experience" },
     showEducation && { id: "education", label: "Education" },
+    showCertificates && { id: "certificates", label: "Certificates" },
     showContact && { id: "contact", label: "Contact" },
   ].filter((item): item is NavItem => Boolean(item));
 
@@ -56,6 +60,7 @@ export default function Page() {
         {showProjects && <Projects data={projects} />}
         {showExperience && <Experience data={experience} />}
         {showEducation && <Education data={education} />}
+        {showCertificates && <Certificates data={certificates} />}
         {showContact && <Contact data={contact} />}
         {showSocial && <SocialLinks data={socialLinks} />}
       </main>

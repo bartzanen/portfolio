@@ -106,6 +106,27 @@ export interface EducationItem {
   detail?: string;
 }
 
+export interface Certificate {
+  /** Name of the certificate or badge, e.g. "AWS Certified Cloud Practitioner". */
+  title: string;
+  /** Issuing organization, e.g. "Amazon Web Services" or "DeepLearning.AI · Coursera". */
+  issuer: string;
+  /** Free-form date the credential was earned, e.g. "Mar 2024" or "2023". */
+  date?: string;
+  /** Credential / verification ID, shown as a small monospace line. */
+  credentialId?: string;
+  /** Link to the verification page or online badge — adds a "Verify" link. */
+  credentialUrl?: string;
+  /**
+   * Badge or certificate image (path under /public or an absolute URL).
+   * Rendered as a small square thumbnail — ideal for Credly-style badges.
+   * When omitted, a neutral award icon is shown instead (never looks broken).
+   */
+  imageUrl?: string;
+  /** Optional skill/topic tags rendered as pills. */
+  tags?: string[];
+}
+
 export interface Contact {
   /** Shown verbatim and used for the mailto CTA. */
   email: string;
@@ -152,6 +173,8 @@ export interface Portfolio {
   experience?: ExperienceItem[];
   /** Empty array hides the Education section. */
   education?: EducationItem[];
+  /** Empty array hides the Certificates & Badges section. */
+  certificates?: Certificate[];
   /** Omit to hide the Contact section. */
   contact?: Contact;
   /** Empty array hides the Social Links section (and footer icons). */

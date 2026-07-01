@@ -1,5 +1,4 @@
 import type { Portfolio } from "@/types/portfolio";
-import { url } from "inspector";
 
 /**
  * ─────────────────────────────────────────────────────────────────────────────
@@ -301,6 +300,45 @@ export const portfolio: Portfolio = {
       period: "2020 — 2021",
       detail:
         "Selective program for secondary students in programming, robotics, and applied digital technology.",
+    },
+  ],
+
+  certificates: [
+    {
+      title: "Advanced Deep Learning Specialist",
+      issuer: "Coursera",
+      date: "2026",
+      credentialUrl:
+        "https://www.credly.com/badges/d9f524f7-81b1-4d25-946e-ece683b6eddc",
+      imageUrl: "/advanced-deep-learning-specialist.png",
+      tags: ["Deep Learning", "Keras", "TensorFlow", "CNNs", "Transformers"],
+    },
+    {
+      title: "Deep Learning with Keras and TensorFlow",
+      issuer: "Coursera",
+      date: "Jul 2026",
+      credentialUrl:
+        "https://coursera.org/share/580862751aa2d62f27b5a188c4348043",
+      imageUrl: "/ibm_logo.jpeg",
+      tags: ["Deep Learning", "Keras", "TensorFlow"],
+    },
+    {
+      title: "Introduction to Deep Learning & Neural Networks with Keras",
+      issuer: "Coursera",
+      date: "Jun 2026",
+      credentialUrl:
+        "https://coursera.org/share/d743e47ec50b3cb606118ff05a28614b",
+      imageUrl: "/ibm_logo.jpeg",
+      tags: ["Deep Learning", "Neural Networks", "Keras"],
+    },
+    {
+      title: "Machine Learning with Python",
+      issuer: "Coursera",
+      date: "Jun 2026",
+      credentialUrl:
+        "https://coursera.org/share/df9a827a193ce3700a46aeceecdc1b9f",
+      imageUrl: "/ibm_logo.jpeg",
+      tags: ["Machine Learning", "Python"],
     },
   ],
 
