@@ -1,3 +1,10 @@
+import certificate_advanced_deep_learning_specialist from "@/assets/advanced-deep-learning-specialist.png";
+import certifcate_ibm_logo from "@/assets/ibm_logo.jpeg";
+import portrait from "@/assets/portrait.png";
+import project_bartinbarcelona from "@/assets/bartinbarcelona.png";
+import project_pulmonurbano from "@/assets/pulmonurbano.png";
+import project_dici from "@/assets/dici.png";
+
 import type { Portfolio } from "@/types/portfolio";
 
 /**
@@ -45,7 +52,7 @@ export const portfolio: Portfolio = {
       label: "See my work",
       href: "#projects", // anchors scroll smoothly; mailto: and https:// also work
     },
-    portrait: "/portrait.PNG",
+    portrait: portrait,
   },
 
   about: {
@@ -126,16 +133,20 @@ export const portfolio: Portfolio = {
     {
       title: "Dici",
       description:
-        "A personal Italian tutor powered by a fine-tuned Qwen 3.5 4B model (MLX). Supports natural conversation practice, real-time grammar correction, and vocabulary explanations through a custom Next.js interface.",
+        "A privacy-first Italian tutor that runs entirely on your device using a fine-tuned Qwen 3.5 4B model (MLX). It provides real-time conversation feedback, turns mistakes into spaced-repetition flashcards, and keeps you motivated with daily AI challenges. Everything stays local—no cloud, no accounts. Built with Next.js.",
+
+      // Dici — A local-first Italian tutor built on a fine-tuned Qwen 3.5 4B (MLX). Conversation practice with real-time correction, daily ▎ challenges, and flashcards generated automatically from your own mistakes — all running on-device with a Next.js interface.
+
       tags: [
-        "Python",
-        "TypeScript",
         "Next.js",
+        "TypeScript",
+        "IndexedDB",
         "MLX",
         "LLM Fine-tuning",
         "Prompt Engineering",
         "Qwen",
       ],
+      liveUrl: "https://dici-frontend.vercel.app/",
       githubUrls: [
         {
           url: "https://github.com/bartzanen/dici",
@@ -145,12 +156,9 @@ export const portfolio: Portfolio = {
           url: "https://github.com/bartzanen/dici-frontend",
           repoType: "Frontend",
         },
-        {
-          url: "https://github.com/bartzanen/dici-backend",
-          repoType: "Backend",
-        },
       ],
       featured: true,
+      imageUrl: project_dici,
     },
     {
       title: "Journii",
@@ -210,7 +218,7 @@ export const portfolio: Portfolio = {
           repoType: "Backend",
         },
       ],
-      imageUrl: "/pulmonurbano.png",
+      imageUrl: project_pulmonurbano,
     },
     {
       title: "BartInBarcelona",
@@ -224,7 +232,7 @@ export const portfolio: Portfolio = {
           repoType: "Code",
         },
       ],
-      imageUrl: "/bartinbarcelona.png",
+      imageUrl: project_bartinbarcelona,
     },
   ],
 
@@ -310,7 +318,7 @@ export const portfolio: Portfolio = {
       date: "2026",
       credentialUrl:
         "https://www.credly.com/badges/d9f524f7-81b1-4d25-946e-ece683b6eddc",
-      imageUrl: "/advanced-deep-learning-specialist.png",
+      imageUrl: certificate_advanced_deep_learning_specialist,
       tags: ["Deep Learning", "Keras", "TensorFlow", "CNNs", "Transformers"],
     },
     {
@@ -319,7 +327,7 @@ export const portfolio: Portfolio = {
       date: "Jul 2026",
       credentialUrl:
         "https://coursera.org/share/580862751aa2d62f27b5a188c4348043",
-      imageUrl: "/ibm_logo.jpeg",
+      imageUrl: certifcate_ibm_logo,
       tags: ["Deep Learning", "Keras", "TensorFlow"],
     },
     {
@@ -328,7 +336,7 @@ export const portfolio: Portfolio = {
       date: "Jun 2026",
       credentialUrl:
         "https://coursera.org/share/d743e47ec50b3cb606118ff05a28614b",
-      imageUrl: "/ibm_logo.jpeg",
+      imageUrl: certifcate_ibm_logo,
       tags: ["Deep Learning", "Neural Networks", "Keras"],
     },
     {
@@ -337,7 +345,7 @@ export const portfolio: Portfolio = {
       date: "Jun 2026",
       credentialUrl:
         "https://coursera.org/share/df9a827a193ce3700a46aeceecdc1b9f",
-      imageUrl: "/ibm_logo.jpeg",
+      imageUrl: certifcate_ibm_logo,
       tags: ["Machine Learning", "Python"],
     },
   ],

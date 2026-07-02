@@ -6,6 +6,8 @@
  * hides the corresponding UI automatically.
  */
 
+import { StaticImageData } from "next/image";
+
 /** Platforms with a dedicated icon. Anything else falls back to a generic link icon. */
 export type SocialPlatform =
   | "github"
@@ -41,7 +43,7 @@ export interface Hero {
     href: string;
   };
   /** Portrait photo — path under /public or an absolute URL. Omit to hide. */
-  portrait?: string;
+  portrait?: string | StaticImageData;
 }
 
 export interface About {
@@ -80,7 +82,7 @@ export interface Project {
    * Screenshot or cover image (absolute URL or a path under /public).
    * When omitted, a neutral placeholder is rendered instead.
    */
-  imageUrl?: string;
+  imageUrl?: string | StaticImageData;
   /** Marks the project as featured (slightly larger card spanning the grid). */
   featured?: boolean;
 }
@@ -122,7 +124,7 @@ export interface Certificate {
    * Rendered as a small square thumbnail — ideal for Credly-style badges.
    * When omitted, a neutral award icon is shown instead (never looks broken).
    */
-  imageUrl?: string;
+  imageUrl?: string | StaticImageData;
   /** Optional skill/topic tags rendered as pills. */
   tags?: string[];
 }
