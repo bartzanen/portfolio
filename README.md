@@ -36,15 +36,19 @@ Served by an **assets-only Cloudflare Worker**: [`wrangler.jsonc`](wrangler.json
 
 `bun run deploy` builds and uploads straight to production. CI (Workers Builds or GitHub Actions) should run the same two steps.
 
-To check a build on the real edge before it goes live — the nearest replacement for Pages' per-branch previews:
+`bun run preview` is the normal way to check a change first. It serves the export through workerd — the runtime Cloudflare itself runs — so asset routing, `_headers`, `.assetsignore` and 404 handling behave exactly as in production, not approximately.
+
+What it cannot do is hand you a URL. For the cases that need one — checking the layout on a phone, sending it to someone before it is public — upload a version without pointing the domain at it:
 
 ```bash
 bun run build
-bunx wrangler versions upload   # prints a <version>-portfolio.<subdomain>.workers.dev URL
+bunx wrangler versions upload   # prints e.g. https://d9bb9a29-portfolio.<subdomain>.workers.dev
 bunx wrangler versions deploy   # promote that version to bartzanen.com
 ```
 
-`workers_dev` is off, so there is no permanent second copy of the site at a `workers.dev` address; `preview_urls` is on, so per-version URLs still work.
+Every upload is an immutable *version*; a *deployment* is which version `bartzanen.com` points at. `bun run deploy` does both in one step, which is usually what you want.
+
+`workers_dev` is off, so there is no permanent second copy of the site at a `workers.dev` address. `preview_urls` is on, so the per-version URLs above work.
 
 Files listed in [`public/.assetsignore`](public/.assetsignore) are excluded from upload. It lives in `public/` because the exclude list has to end up *inside* the assets directory, and `next build` copies `public/` into `out/` verbatim.
 
