@@ -1,88 +1,100 @@
-# Data-Driven Portfolio Template
+# bartzanen.com
 
-A single-page developer portfolio built with **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS**, and **Framer Motion** — designed so that **the only file you ever edit is [`src/data/portfolio.ts`](src/data/portfolio.ts)**.
+My personal portfolio — a single-page site built with **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS** and **Framer Motion**, statically exported and hosted on **Cloudflare Pages**.
 
-Every section is generated from that one typed config object. Empty arrays or omitted fields hide their sections automatically (and remove them from the header nav). No component changes are ever needed to update content.
+The whole page is generated from one typed config object: [`src/data/portfolio.ts`](src/data/portfolio.ts). Sections whose data is missing or empty disappear from the page *and* from the header nav automatically, so content changes never require touching a component.
 
-## Features
+## Stack & characteristics
 
-- 📄 **Fully data-driven** — one strongly typed config file, zero `any`
-- 🌗 **Dark/light mode** — Tailwind `class` strategy via `next-themes`, defaults to system preference, toggle in the header
-- 🎞️ **Subtle motion** — scroll-triggered fade/slide reveals (staggered for lists), gentle hover lifts, smooth header background on scroll; respects `prefers-reduced-motion`; nothing loops
-- 📱 **Mobile-first, fully responsive**
-- 🔍 **SEO from config** — `<title>`, description, keywords, and Open Graph/Twitter metadata all derive from `portfolio.seo`
-- ⚡ **Static output** — the page is prerendered; self-hosted fonts (no Google Fonts requests); built for Lighthouse 90+
-- 🧩 **Modular** — one component per section under `src/components/sections/`
+- **Data-driven** — one strongly typed config file, no `any`
+- **Static export** (`output: "export"`) — no server at runtime, no image optimization pipeline; every image is a local `StaticImageData` import, pre-sized and encoded to WebP
+- **Dark/light mode** — Tailwind `class` strategy via `next-themes`, defaults to system preference
+- **Motion** — scroll-triggered reveals (staggered for lists), hover lifts, scroll-aware header; respects `prefers-reduced-motion`
+- **Accessible navigation** — skip link, mobile menu with `aria-expanded`/`aria-controls`, and `IntersectionObserver`-based active-section tracking surfaced via `aria-current`
+- **SEO** — metadata, Open Graph/Twitter cards, `robots.txt`, `sitemap.xml` and schema.org `Person` structured data are all derived from the same config, so they cannot drift from the visible page
+- **Self-hosted fonts** — `@fontsource-variable/*`, no runtime requests to Google
 
-## Quick start
+## Scripts
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build
-npm run typecheck
+npm run dev        # http://localhost:3000
+npm run build      # static export → out/
+npm run lint       # eslint (next/core-web-vitals + next/typescript)
+npm run typecheck  # tsc --noEmit
 ```
 
-**Deploy to Vercel:** push the repo to GitHub and import it at vercel.com — no configuration needed. Remember to set `seo.url` to your production domain so Open Graph links resolve.
+There is no `npm start`: `output: "export"` means `next start` does not apply. To preview a production build locally, serve the export directly:
+
+```bash
+npx serve out
+```
+
+## Deployment
+
+Cloudflare Pages builds with `npm run build` and publishes `out/`.
+
+| Environment variable | Required | Purpose |
+|---|---|---|
+| `NEXT_PUBLIC_CF_BEACON_TOKEN` | — | Cloudflare Web Analytics beacon token. Set in the Pages dashboard; when absent the script is omitted entirely, so local and preview builds stay untracked. |
+
+See [`.env.example`](.env.example). Keep `seo.url` pointed at the production domain — Open Graph URLs, the canonical link, the sitemap and `robots.txt` all derive from it.
 
 ## Project structure
 
 ```
 src/
 ├── app/
-│   ├── layout.tsx        # Fonts, theme provider, metadata from config
-│   ├── page.tsx          # Composes sections; hides empty ones
-│   ├── globals.css       # Tailwind layers + base styles
-│   └── icon.svg          # Favicon
+│   ├── layout.tsx          # Fonts, theme provider, metadata, JSON-LD, analytics
+│   ├── page.tsx            # Composes sections; hides empty ones, builds the nav
+│   ├── globals.css         # Tailwind layers + base styles
+│   ├── robots.ts           # robots.txt (static)
+│   ├── sitemap.ts          # sitemap.xml (static)
+│   └── icon.svg            # Favicon
 ├── data/
-│   └── portfolio.ts      # ⭐ THE config file — edit this
+│   └── portfolio.ts        # ⭐ THE config file — edit this
 ├── types/
-│   └── portfolio.ts      # All TypeScript types for the config
+│   └── portfolio.ts        # All config types, field-by-field documented
 ├── lib/
-│   └── social-icons.ts   # Platform → icon mapping
+│   ├── social-icons.ts     # Platform → icon mapping
+│   └── structured-data.ts  # schema.org Person, derived from the config
+├── assets/                 # WebP images imported by the config
 └── components/
-    ├── Header.tsx        # Fixed header, scroll-aware background, nav
-    ├── ThemeToggle.tsx   # Light/dark switch
-    ├── motion/Reveal.tsx # Reveal / Stagger / HoverLift primitives
-    ├── ui/Section.tsx    # Section shell + Tag pill
-    └── sections/         # Hero, About, Skills, Projects, Experience,
-                          # Education, Certificates, Contact, SocialLinks
+    ├── Header.tsx          # Fixed header, mobile menu, active-section tracking
+    ├── ThemeToggle.tsx     # Light/dark switch
+    ├── motion/Reveal.tsx   # Reveal / Stagger / HoverLift primitives
+    ├── ui/Section.tsx      # Section shell + Tag pill
+    └── sections/           # Hero, About, Skills, Projects, Experience,
+                            # Education, Certificates, Contact, SocialLinks
 ```
 
 ## Configuration reference (`src/data/portfolio.ts`)
 
-The config exports a single `Portfolio` object. Sections appear in this fixed order: **Hero → About → Skills → Projects → Experience → Education → Certificates → Contact → Social Links**. Every section except Hero is optional.
+The config exports a single `Portfolio` object. Sections render in this fixed order: **Hero → About → Skills → Projects → Experience → Education → Certificates → Contact → Social Links**. Every section except Hero is optional.
+
+Images are imported as modules (`import portrait from "@/assets/portrait.webp"`) so Next can emit correct `width`/`height` and hashed filenames under a static export. Plain `/public` paths and absolute URLs also work, but skip that benefit.
 
 ### `seo` (required)
-
-Controls the document `<head>`.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `title` | `string` | ✅ | Browser tab title and Open Graph title. |
-| `description` | `string` | ✅ | Meta description (aim for ~150 chars). |
-| `url` | `string` | — | Canonical production URL, e.g. `"https://jane.dev"`. Enables absolute OG URLs. |
+| `description` | `string` | ✅ | Meta description (~150 chars). |
+| `url` | `string` | — | Canonical production URL. Enables absolute OG URLs, the sitemap and the `robots.txt` host line. |
 | `ogImage` | `string` | — | Absolute URL of a 1200×630 link-preview image. |
 | `keywords` | `string[]` | — | Extra keywords meta tag. |
-
-```ts
-seo: {
-  title: "Jane Doe — Frontend Engineer",
-  description: "Frontend engineer crafting accessible interfaces in React.",
-  url: "https://janedoe.dev",
-  ogImage: "https://janedoe.dev/og.png",
-}
-```
 
 ### `hero` (required — the only always-visible section)
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `name` | `string` | ✅ | Your name; rendered as the `<h1>`. |
+| `name` | `string` | ✅ | Rendered as the `<h1>`, and used as the header brand. |
 | `headline` | `string` | ✅ | One-line professional title under the name. |
 | `tagline` | `string` | — | 1–2 supporting sentences. |
-| `eyebrow` | `string` | — | Small monospace line above the name (e.g. `~/jane-doe`). Also used as the header brand; falls back to `name` if omitted. |
-| `cta` | `{ label, href }` | — | Primary button. `href` accepts anchors (`#projects`), `mailto:` links, or full URLs. Omit to hide. |
+| `eyebrow` | `string` | — | Small label above the name. |
+| `cta` | `{ label, href }` | — | Primary button. `href` accepts anchors (`#projects`), `mailto:`, or full URLs. |
+| `secondaryCta` | `{ label, href }` | — | Outline button beside the primary one — typically the CV. |
+| `portrait` | `StaticImageData \| string` | — | Portrait photo. Omit to hide. |
 
 ### `about` (optional)
 
@@ -91,27 +103,20 @@ Hidden when omitted or when `paragraphs` is `[]`.
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `paragraphs` | `string[]` | ✅ | Each string renders as one paragraph. |
-| `highlights` | `string[]` | — | Short quick-facts list shown beside the text (e.g. `"8+ years in backend"`). Omit to use full width for the paragraphs. |
+| `highlights` | `string[]` | — | Quick-facts list beside the text. Omit to use full width. |
 
 ### `skills` (optional)
 
-An array of groups; `[]` hides the section.
+Array of groups; `[]` hides the section. Groups whose `title` contains "spoken" are excluded from the structured-data `knowsAbout` list (spoken languages are not areas of expertise).
 
 | Field | Type | Description |
 |---|---|---|
-| `title` | `string` | Group heading, e.g. `"Languages"`, `"Infrastructure"`. |
+| `title` | `string` | Group heading, e.g. `"Languages"`. |
 | `skills` | `string[]` | Rendered as pill tags. |
-
-```ts
-skills: [
-  { title: "Languages", skills: ["Go", "TypeScript"] },
-  { title: "Practices", skills: ["System design", "Mentoring"] },
-]
-```
 
 ### `projects` (optional)
 
-An array of project cards; `[]` hides the section.
+Array of project cards; `[]` hides the section.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
@@ -119,11 +124,11 @@ An array of project cards; `[]` hides the section.
 | `description` | `string` | ✅ | 1–3 sentence summary. |
 | `tags` | `string[]` | ✅ | Tech/topic pills (can be `[]`). |
 | `liveUrl` | `string` | — | Shows a "Live" button when present. |
-| `githubUrl` | `string` | — | Shows a "Code" button when present. |
-| `imageUrl` | `string` | — | Cover image (remote URL or `/public` path). **When omitted, a neutral terminal-style placeholder is shown** — cards never look broken. |
-| `featured` | `boolean` | — | `true` makes the card span the full grid width. |
+| `githubUrls` | `GitHubRepo[]` | — | One badge per repo, so multi-repo projects (frontend + backend) link to each. |
+| `imageUrl` | `StaticImageData \| string` | — | Cover image. When omitted, a neutral terminal-style placeholder is shown. |
+| `featured` | `boolean` | — | Makes the card span the full grid width. |
 
-> Remote images are allowed from any HTTPS host by default (see `next.config.ts`). Tighten `images.remotePatterns` to your actual hosts for production if you prefer.
+`GitHubRepo` is `{ url, repoType, private? }`. `repoType` labels the badge (e.g. `"Frontend"`); `private: true` renders a muted, non-clickable badge instead of a link, acknowledging the repo without sending visitors to a 404.
 
 ### `experience` (optional)
 
@@ -133,83 +138,64 @@ Work history, newest first; `[]` hides the section.
 |---|---|---|---|
 | `role` | `string` | ✅ | Job title. |
 | `company` | `string` | ✅ | Employer name. |
+| `category` | `"engineering" \| "other"` | — | Defaults to `"engineering"`. When any entry sets one, the section renders labelled groups ("Engineering", then "Other experience"); otherwise a flat list. |
 | `companyUrl` | `string` | — | Wraps the company name in a link. |
 | `period` | `string` | ✅ | Free-form, e.g. `"2022 — Present"`. |
-| `location` | `string` | — | e.g. `"Remote"` or `"Berlin, DE"`. |
+| `location` | `string` | — | e.g. `"Remote"`. |
 | `achievements` | `string[]` | ✅ | One-sentence impact bullets. |
 
 ### `education` (optional)
-
-`[]` hides the section.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `degree` | `string` | ✅ | e.g. `"MSc, Computer Science"`. |
 | `institution` | `string` | ✅ | School/university name. |
 | `period` | `string` | ✅ | Free-form date range. |
-| `detail` | `string` | — | Extra line: thesis topic, honors, etc. |
+| `detail` | `string` | — | Thesis topic, honors, etc. |
 
 ### `certificates` (optional)
 
-Certificates and digital badges (Credly, Coursera, freeCodeCamp, cloud certs, …); `[]` hides the section. Each entry is a card in a two-column grid.
+Certificates and digital badges; `[]` hides the section.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
-| `title` | `string` | ✅ | Certificate/badge name, e.g. `"AWS Certified Cloud Practitioner"`. |
-| `issuer` | `string` | ✅ | Issuing organization, e.g. `"Amazon Web Services"` or `"DeepLearning.AI · Coursera"`. |
-| `date` | `string` | — | Free-form date earned, e.g. `"Mar 2024"` or `"2023"`. |
-| `credentialId` | `string` | — | Credential/verification ID, shown as a small monospace line. |
-| `credentialUrl` | `string` | — | Verification/badge link. When present, adds a "Verify credential" link. |
-| `imageUrl` | `string` | — | Badge image (`/public` path or absolute URL), rendered as a small square thumbnail — ideal for Credly-style badges. **When omitted, a neutral award icon is shown** so cards never look broken. |
-| `tags` | `string[]` | — | Skill/topic pills shown on the card. |
-
-```ts
-certificates: [
-  {
-    title: "Machine Learning Specialization",
-    issuer: "DeepLearning.AI · Coursera",
-    date: "2025",
-    credentialUrl: "https://coursera.org/verify/specialization/XXXXXXXX",
-    tags: ["Machine Learning", "Python"],
-  },
-]
-```
+| `title` | `string` | ✅ | Certificate/badge name. |
+| `issuer` | `string` | ✅ | Issuing organization. |
+| `date` | `string` | — | Free-form date earned. |
+| `credentialId` | `string` | — | Verification ID, shown as a small monospace line. |
+| `credentialUrl` | `string` | — | Adds a "Verify credential" link. |
+| `imageUrl` | `StaticImageData \| string` | — | Badge thumbnail. When omitted, a neutral award icon is shown. |
+| `tags` | `string[]` | — | Skill/topic pills. |
 
 ### `contact` (optional)
 
-Hidden when omitted. **No form** — just a `mailto:` CTA button, location, and an availability badge.
+Hidden when omitted or when `email` is empty. **No form** — a `mailto:` CTA, location, and an availability badge.
 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `email` | `string` | ✅ | Shown on the button and used for `mailto:`. |
-| `location` | `string` | — | e.g. `"Turin, Italy · CET (UTC+1)"`. |
-| `availability` | `{ status, label }` | — | Status badge. `status` controls the dot color: `"available"` → green, `"limited"` → amber, `"unavailable"` → gray. `label` is the badge text. |
+| `location` | `string` | — | e.g. `"Copenhagen, DK · CET (UTC+1)"`. The part before `·` is parsed into the structured-data address. |
+| `availability` | `{ status, label }` | — | `status` controls the dot color: `"available"` → green, `"limited"` → amber, `"unavailable"` → gray. |
 | `note` | `string` | — | Short invitation sentence above the button. |
-
-```ts
-contact: {
-  email: "hello@janedoe.dev",
-  location: "Lisbon, PT",
-  availability: { status: "available", label: "Open to freelance work" },
-}
-```
 
 ### `socialLinks` (optional)
 
-`[]` hides the section.
+`[]` hides the section and the footer icons.
 
 | Field | Type | Description |
 |---|---|---|
-| `platform` | `SocialPlatform` | One of `github`, `linkedin`, `twitter`, `mastodon`, `dribbble`, `youtube`, `instagram`, `website`, `rss`, `other` — picks the icon. Unknown platforms fall back to a generic link icon. |
+| `platform` | `SocialPlatform` | One of `github`, `linkedin`, `whatsapp`, `website`, `calendly`, `cv`, `other` — picks the icon. Unknown platforms fall back to a generic link icon. |
 | `label` | `string` | Visible text, e.g. `"GitHub"`. |
 | `url` | `string` | Full URL including `https://`. |
 
+Only real profile URLs reach the schema.org `sameAs` list — the CV link and non-`http` URLs are filtered out.
+
 ## Customization beyond content
 
-- **Accent color:** change `colors.accent` in `tailwind.config.ts` and the few `teal-*` utilities (search-and-replace `teal-` works well).
+- **Accent color:** change `colors.accent` in `tailwind.config.ts` and the `teal-*` utilities (search-and-replace `teal-` works well).
 - **Fonts:** swap the `@fontsource-variable/*` imports in `src/app/layout.tsx` and the `--font-*` variables in `globals.css`.
 - **Section order:** rearrange the components in `src/app/page.tsx`.
 
 ## License
 
-Use it freely for your own portfolio. Replace all placeholder content (Maya Lindqvist is fictional, and the example URLs don't resolve) before deploying.
+The code is free to reuse for your own portfolio. The content, images, and CV in `src/data`, `src/assets` and `public/` are mine — replace them.
