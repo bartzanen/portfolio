@@ -11,7 +11,7 @@ export function personSchema(portfolio: Portfolio) {
   const { seo, hero, about, contact, socialLinks, education, skills } =
     portfolio;
 
-  // "Copenhagen, DK · CET (UTC+1)" -> "Copenhagen, DK" -> locality + country
+  // "Barcelona, ES · CET (UTC+1)" -> "Barcelona, ES" -> locality + country
   const [locality, country] = (contact?.location ?? "")
     .split("·")[0]
     .trim()
