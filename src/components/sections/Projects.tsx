@@ -12,8 +12,20 @@ function slugify(title: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
+/**
+ * True for taller-than-wide images (e.g. phone screenshots). Only knowable
+ * for statically imported images, which carry their intrinsic dimensions.
+ */
+function isPortraitImage(src: Project["imageUrl"]): boolean {
+  return typeof src === "object" && src !== null && src.height > src.width;
+}
+
 function ProjectImage({ project }: { project: Project }) {
   if (project.imageUrl) {
+    // Portrait sources are letterboxed rather than cropped — `object-cover`
+    // on a 16/9 frame would reduce a phone screenshot to a thin middle slice.
+    const portrait = isPortraitImage(project.imageUrl);
+
     return (
       <div className="relative aspect-[16/9] overflow-hidden bg-stone-100 dark:bg-zinc-900">
         <Image
@@ -21,7 +33,7 @@ function ProjectImage({ project }: { project: Project }) {
           alt={`Screenshot of ${project.title}`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 480px"
-          className="object-cover"
+          className={portrait ? "object-contain py-3" : "object-cover"}
         />
       </div>
     );

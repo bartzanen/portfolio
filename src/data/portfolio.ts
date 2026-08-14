@@ -1,8 +1,8 @@
-import certificate_advanced_deep_learning_specialist from "@/assets/advanced-deep-learning-specialist.png";
-import certifcate_ibm_logo from "@/assets/ibm_logo.jpeg";
-import portrait from "@/assets/portrait.png";
-import project_pulmonurbano from "@/assets/pulmonurbano.png";
-import project_dici from "@/assets/dici.png";
+import certificate_advanced_deep_learning_specialist from "@/assets/advanced-deep-learning-specialist.webp";
+import certificate_ibm_logo from "@/assets/ibm_logo.webp";
+import portrait from "@/assets/portrait.webp";
+import project_pulmonurbano from "@/assets/pulmonurbano.webp";
+import project_dici from "@/assets/dici.webp";
 
 import type { Portfolio } from "@/types/portfolio";
 
@@ -339,7 +339,7 @@ export const portfolio: Portfolio = {
       date: "Jun 2026",
       credentialUrl:
         "https://coursera.org/share/df9a827a193ce3700a46aeceecdc1b9f",
-      imageUrl: certifcate_ibm_logo,
+      imageUrl: certificate_ibm_logo,
       tags: ["Machine Learning", "Python"],
     },
   ],
