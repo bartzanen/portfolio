@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Lock } from "lucide-react";
 import type { Project } from "@/types/portfolio";
 import { Section, Tag } from "@/components/ui/Section";
 import { HoverLift, Stagger, StaggerItem } from "@/components/motion/Reveal";
@@ -78,18 +78,31 @@ function ProjectCard({ project }: { project: Project }) {
                 </a>
               )}
               {project.githubUrls &&
-                project.githubUrls.map((githubUrl) => (
-                  <a
-                    key={githubUrl.repoType}
-                    href={githubUrl.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-700 transition-colors hover:border-teal-600/50 hover:text-teal-700 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-teal-400/50 dark:hover:text-teal-400"
-                  >
-                    <Github className="h-3.5 w-3.5" aria-hidden="true" />
-                    {githubUrl.repoType}
-                  </a>
-                ))}
+                project.githubUrls.map((githubUrl) =>
+                  githubUrl.private ? (
+                    // Private source: shown, but never linked — a link here
+                    // would 404 for anyone not on the repo.
+                    <span
+                      key={githubUrl.repoType}
+                      title="This repository is private"
+                      className="inline-flex cursor-default items-center gap-1.5 rounded-full border border-dashed border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-500 dark:border-zinc-700 dark:text-zinc-500"
+                    >
+                      <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+                      {githubUrl.repoType} · Private
+                    </span>
+                  ) : (
+                    <a
+                      key={githubUrl.repoType}
+                      href={githubUrl.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-700 transition-colors hover:border-teal-600/50 hover:text-teal-700 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-teal-400/50 dark:hover:text-teal-400"
+                    >
+                      <Github className="h-3.5 w-3.5" aria-hidden="true" />
+                      {githubUrl.repoType}
+                    </a>
+                  ),
+                )}
             </div>
           )}
         </div>
