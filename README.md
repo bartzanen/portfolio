@@ -64,13 +64,13 @@ src/
     ├── ThemeToggle.tsx     # Light/dark switch
     ├── motion/Reveal.tsx   # Reveal / Stagger / HoverLift primitives
     ├── ui/Section.tsx      # Section shell + Tag pill
-    └── sections/           # Hero, About, Experience, Skills, Projects,
+    └── sections/           # Hero, About, Experience, Projects, Skills,
                             # Education, Certificates, Contact, SocialLinks
 ```
 
 ## Configuration reference (`src/data/portfolio.ts`)
 
-The config exports a single `Portfolio` object. Sections render in this fixed order: **Hero → About → Experience → Skills → Projects → Education → Certificates → Contact → Social Links**. Every section except Hero is optional.
+The config exports a single `Portfolio` object. Sections render in this fixed order: **Hero → About → Experience → Projects → Skills → Education → Certificates → Contact → Social Links**. Every section except Hero is optional.
 
 Images are imported as modules (`import portrait from "@/assets/portrait.webp"`) so Next can emit correct `width`/`height` and hashed filenames under a static export. Plain `/public` paths and absolute URLs also work, but skip that benefit.
 
@@ -119,15 +119,6 @@ Work history, newest first; `[]` hides the section.
 | `location` | `string` | — | e.g. `"Remote"`. |
 | `achievements` | `string[]` | ✅ | One-sentence impact bullets. |
 
-### `skills` (optional)
-
-Array of groups; `[]` hides the section. Groups whose `title` contains "spoken" are excluded from the structured-data `knowsAbout` list (spoken languages are not areas of expertise).
-
-| Field | Type | Description |
-|---|---|---|
-| `title` | `string` | Group heading, e.g. `"Languages"`. |
-| `skills` | `string[]` | Rendered as pill tags. |
-
 ### `projects` (optional)
 
 Array of project cards; `[]` hides the section.
@@ -143,6 +134,15 @@ Array of project cards; `[]` hides the section.
 | `featured` | `boolean` | — | Makes the card span the full grid width. |
 
 `GitHubRepo` is `{ url, repoType, private? }`. `repoType` labels the badge (e.g. `"Frontend"`); `private: true` renders a muted, non-clickable badge instead of a link, acknowledging the repo without sending visitors to a 404.
+
+### `skills` (optional)
+
+Array of groups; `[]` hides the section. Each group renders as one row of a spec sheet: the `title` sits in a fixed left gutter, its `skills` flow beside it, and a hairline rule separates groups. Groups whose `title` contains "spoken" are excluded from the structured-data `knowsAbout` list (spoken languages are not areas of expertise).
+
+| Field | Type | Description |
+|---|---|---|
+| `title` | `string` | Row label in the gutter, e.g. `"Languages"`. Keep it under ~17 characters or it wraps to two lines. |
+| `skills` | `string[]` | Rendered as chips. |
 
 ### `education` (optional)
 

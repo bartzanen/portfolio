@@ -148,11 +148,11 @@ export const portfolio: Portfolio = {
     {
       title: "Spoken languages",
       skills: [
-        "English · C2",
-        "Spanish · C2",
-        "Dutch · C2",
-        "Catalan · C2",
-        "Italian · B1",
+        "English · Native",
+        "Dutch · Native",
+        "Spanish · Native",
+        "Catalan · Native",
+        "Italian · Intermediate",
       ],
     },
   ],
@@ -322,6 +322,7 @@ export const portfolio: Portfolio = {
     {
       title: "Building AI Agents and Agentic Workflows (Specialization)",
       issuer: "IBM · Coursera",
+      date: "Jul 2026",
       credentialUrl:
         "https://www.credly.com/badges/55cfe32d-e37a-46bc-8483-d1a647b6163d/public_url",
       imageUrl: certificate_building_ai_agents,
@@ -330,7 +331,7 @@ export const portfolio: Portfolio = {
     {
       title: "Advanced Deep Learning Specialist",
       issuer: "IBM · Coursera",
-      date: "2026",
+      date: "Jul 2026",
       credentialUrl:
         "https://www.credly.com/badges/d9f524f7-81b1-4d25-946e-ece683b6eddc",
       imageUrl: certificate_advanced_deep_learning_specialist,
@@ -348,6 +349,7 @@ export const portfolio: Portfolio = {
     {
       title: "Fundamentals of Building AI Agents",
       issuer: "IBM · Coursera",
+      date: "Jul 2026",
       credentialUrl:
         "https://www.credly.com/badges/f557d70d-3f88-4500-bf5b-17fcd1954742/public_url",
       imageUrl: certificate_fundamentals_ai_agents,
