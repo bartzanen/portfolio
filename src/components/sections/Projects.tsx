@@ -77,7 +77,7 @@ function ProjectCard({ project }: { project: Project }) {
           )}
 
           {(project.liveUrl || project.githubUrls) && (
-            <div className="mt-1 flex gap-2">
+            <div className="mt-1 flex flex-wrap gap-2">
               {project.liveUrl && (
                 <a
                   href={project.liveUrl}
@@ -97,7 +97,7 @@ function ProjectCard({ project }: { project: Project }) {
                     <span
                       key={githubUrl.repoType}
                       title="This repository is private"
-                      className="inline-flex cursor-default items-center gap-1.5 rounded-full border border-dashed border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-500 dark:border-zinc-700 dark:text-zinc-500"
+                      className="inline-flex cursor-default items-center gap-1.5 whitespace-nowrap rounded-full border border-dashed border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-500 dark:border-zinc-700 dark:text-zinc-500"
                     >
                       <Lock className="h-3.5 w-3.5" aria-hidden="true" />
                       {githubUrl.repoType} · Private
