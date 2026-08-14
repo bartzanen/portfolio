@@ -50,7 +50,7 @@ function ProjectCard({ project }: { project: Project }) {
           <h3 className="font-display text-lg font-semibold text-stone-900 dark:text-zinc-50">
             {project.title}
           </h3>
-          <p className="flex-1 text-sm leading-relaxed text-justify">
+          <p className="flex-1 text-sm leading-relaxed">
             {project.description}
           </p>
 
