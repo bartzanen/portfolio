@@ -1,4 +1,6 @@
 import certificate_advanced_deep_learning_specialist from "@/assets/advanced-deep-learning-specialist.webp";
+import certificate_building_ai_agents from "@/assets/building-ai-agents-specialization.webp";
+import certificate_fundamentals_ai_agents from "@/assets/fundamentals-of-building-ai-agents.webp";
 import certificate_ibm_logo from "@/assets/ibm_logo.webp";
 import portrait from "@/assets/portrait.webp";
 import project_pulmonurbano from "@/assets/pulmonurbano.webp";
@@ -46,7 +48,7 @@ export const portfolio: Portfolio = {
     // Small monospace line above the name. Omit to hide.
     name: "Bart Zanen",
     headline: "Full-Stack Software Engineer",
-    eyebrow: "Based in Copenhagen",
+    eyebrow: "Based in Barcelona · open to relocating",
     tagline:
       "I build full-stack web apps with AI in the stack — from fine-tuned on-device models to the interface around them. Currently co-founding Journii, and open to full-time roles.",
     cta: {
@@ -89,6 +91,7 @@ export const portfolio: Portfolio = {
         "Next.js",
         "Expo",
         "React Native",
+        "Vue.js",
         "Tailwind CSS",
         "Zustand",
         "Redux",
@@ -99,6 +102,7 @@ export const portfolio: Portfolio = {
       title: "Backend & Data",
       skills: [
         "Django",
+        "Node.js",
         "NestJS",
         "PostgreSQL",
         "SQLite",
@@ -109,17 +113,36 @@ export const portfolio: Portfolio = {
     },
     {
       title: "AI/ML",
-      skills: ["Core ML", "MLX", "OpenAI API", "Anthropic API", "Hugging Face"],
+      skills: [
+        "PyTorch",
+        "TensorFlow/Keras",
+        "Hugging Face",
+        "LangGraph",
+        "CrewAI",
+        "RAG",
+        "LLM fine-tuning",
+        "Segment Anything Model",
+        "MLX",
+        "Core ML",
+        "OpenAI API",
+        "Anthropic API",
+      ],
     },
     {
       title: "Tools & Platforms",
       skills: [
         "Git",
         "Docker",
+        "GitHub Actions",
+        "Cloudflare",
+        "AWS",
         "Supabase",
         "Firebase",
-        "GitHub Actions",
+        "OSRM",
+        "Postman",
         "Figma",
+        "Claude Code",
+        "Notion",
       ],
     },
     {
@@ -138,10 +161,7 @@ export const portfolio: Portfolio = {
     {
       title: "Dici",
       description:
-        "A privacy-first Italian tutor that runs entirely on your device using a fine-tuned Qwen 3.5 4B model (MLX). It provides real-time conversation feedback, turns mistakes into spaced-repetition flashcards, and keeps you motivated with daily AI challenges. Everything stays local—no cloud, no accounts. Built with Next.js.",
-
-      // Dici — A local-first Italian tutor built on a fine-tuned Qwen 3.5 4B (MLX). Conversation practice with real-time correction, daily ▎ challenges, and flashcards generated automatically from your own mistakes — all running on-device with a Next.js interface.
-
+        "A privacy-first Italian tutor that runs entirely on your device. I fine-tuned a Qwen 3.5 4B model with LoRA on a custom dataset of 1,000+ tutor-student exchanges to match a target teaching tone, then served it locally with MLX. It gives real-time conversation feedback, turns mistakes into spaced-repetition flashcards, and keeps you moving with daily AI challenges. Everything stays local—no cloud, no accounts. Built with Next.js.",
       tags: [
         "Next.js",
         "TypeScript",
@@ -166,36 +186,9 @@ export const portfolio: Portfolio = {
       imageUrl: project_dici,
     },
     {
-      title: "Journii",
-      description:
-        "A social platform for Erasmus students combining a social feed, event discovery, and nearby connections, so students can make the most of their exchange. I co-founded it and built the core of both clients — a Next.js web app and an Expo mobile app sharing UI components, types, and themes through an internal package system, deployed on Cloudflare via CI/CD.",
-      tags: [
-        "React Native",
-        "Expo",
-        "Next.js",
-        "Supabase",
-        "Monorepo",
-        "CI/CD",
-        "Cloudflare",
-      ],
-      liveUrl: "https://journiiapp.com",
-      githubUrls: [
-        {
-          url: "https://github.com/journii-app/journii-mobile",
-          repoType: "Mobile",
-          private: true,
-        },
-        {
-          url: "https://github.com/journii-app/journii-web",
-          repoType: "Web",
-          private: true,
-        },
-      ],
-    },
-    {
       title: "AiGile 2.0",
       description:
-        "My Bachelor's thesis at UPC — the second iteration of AiGILE, an AI-powered educational platform for teaching agile methodologies in a university Software Project Management course.",
+        "My Bachelor's thesis at UPC (graded 8.3/10) — the second iteration of AiGILE, an AI-powered platform for teaching agile methodologies in a university Software Project Management course. Developed solo over one semester: AI-orchestrated simulations that adapt to student-submitted startup ideas across four scenario types, plus a custom scenario builder for instructors.",
       tags: ["Django", "OpenAI API", "PostgreSQL", "Docker", "Education"],
       githubUrls: [
         {
@@ -208,7 +201,7 @@ export const portfolio: Portfolio = {
     {
       title: "Pulmón Urbano",
       description:
-        "A mobile app for athletes in Barcelona. Combines a real-time air quality map with route planning that favors cleaner-air paths, plus social features like activity tracking, a community feed, friends, and chat. Built with React Native/Expo and a Django backend, integrating OSRM for routing and Barcelona's open air-quality data API.",
+        "A mobile app for athletes in Barcelona, combining a real-time air quality map with route planning that favors cleaner-air paths, plus social features like activity tracking, a community feed, friends, and chat. I led the 4-person team and owned the software architecture and the OSRM routing integration, wired to Barcelona's open air-quality API. Built with React Native/Expo and a Django backend.",
       tags: [
         "React Native",
         "Expo",
@@ -246,14 +239,16 @@ export const portfolio: Portfolio = {
       ],
     },
     {
-      role: "Junior Full-Stack Developer",
+      role: "Software Engineer Intern",
       company: "Rosepetal",
       companyUrl: "https://www.rosepetal.ai/",
       category: "engineering",
       period: "Apr 2024 — Jan 2025",
       location: "Sabadell, ES",
       achievements: [
-        "Built an AI-assisted dataset labeling tool integrated into the internal editor, improving labeling efficiency by 35%.",
+        "Increased dataset labeling efficiency by 35%, as measured by the labeling team, by building a solo Python integration of Meta's Segment Anything Model into the internal labeling editor.",
+        "Selected Segment Anything Model over two competing models after independent research and testing; the integration is still used company-wide across all datasets more than a year later.",
+        "Designed and built the card components and routing for a client dashboard used by 15+ clients managing 120+ datasets, owning the Figma design within a three-person team over four months.",
         "Developed and improved software for AI-driven quality control systems, supporting automated defect detection and process monitoring on industrial production lines.",
         "Identified and resolved performance bottlenecks across the application, improving responsiveness and overall system stability.",
       ],
@@ -306,7 +301,7 @@ export const portfolio: Portfolio = {
       institution: "Universitat Politècnica de Catalunya (UPC)",
       period: "Sep 2021 — Jan 2026",
       detail:
-        "Thesis: AiGile 2.0, an AI-powered tool for learning agile methodologies.",
+        "Thesis: AiGile 2.0, an AI-powered tool for learning agile methodologies — graded 8.3/10.",
     },
     {
       degree: "Erasmus Exchange",
@@ -325,8 +320,16 @@ export const portfolio: Portfolio = {
 
   certificates: [
     {
+      title: "Building AI Agents and Agentic Workflows (Specialization)",
+      issuer: "IBM · Coursera",
+      credentialUrl:
+        "https://www.credly.com/badges/55cfe32d-e37a-46bc-8483-d1a647b6163d/public_url",
+      imageUrl: certificate_building_ai_agents,
+      tags: ["AI Agents", "LangGraph", "CrewAI", "Multi-Agent Systems", "RAG"],
+    },
+    {
       title: "Advanced Deep Learning Specialist",
-      issuer: "Coursera",
+      issuer: "IBM · Coursera",
       date: "2026",
       credentialUrl:
         "https://www.credly.com/badges/d9f524f7-81b1-4d25-946e-ece683b6eddc",
@@ -335,18 +338,26 @@ export const portfolio: Portfolio = {
     },
     {
       title: "Machine Learning with Python",
-      issuer: "Coursera",
+      issuer: "IBM · Coursera",
       date: "Jun 2026",
       credentialUrl:
         "https://coursera.org/share/df9a827a193ce3700a46aeceecdc1b9f",
       imageUrl: certificate_ibm_logo,
       tags: ["Machine Learning", "Python"],
     },
+    {
+      title: "Fundamentals of Building AI Agents",
+      issuer: "IBM · Coursera",
+      credentialUrl:
+        "https://www.credly.com/badges/f557d70d-3f88-4500-bf5b-17fcd1954742/public_url",
+      imageUrl: certificate_fundamentals_ai_agents,
+      tags: ["AI Agents", "LangChain", "Tool Calling", "Prompt Engineering"],
+    },
   ],
 
   contact: {
     email: "bartszanen@gmail.com",
-    location: "Copenhagen, DK · CET (UTC+1)",
+    location: "Barcelona, ES · CET (UTC+1)",
     availability: {
       // "available" (green) | "limited" (amber) | "unavailable" (gray)
       status: "available",

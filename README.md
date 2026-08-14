@@ -64,13 +64,13 @@ src/
     ├── ThemeToggle.tsx     # Light/dark switch
     ├── motion/Reveal.tsx   # Reveal / Stagger / HoverLift primitives
     ├── ui/Section.tsx      # Section shell + Tag pill
-    └── sections/           # Hero, About, Skills, Projects, Experience,
+    └── sections/           # Hero, About, Experience, Skills, Projects,
                             # Education, Certificates, Contact, SocialLinks
 ```
 
 ## Configuration reference (`src/data/portfolio.ts`)
 
-The config exports a single `Portfolio` object. Sections render in this fixed order: **Hero → About → Skills → Projects → Experience → Education → Certificates → Contact → Social Links**. Every section except Hero is optional.
+The config exports a single `Portfolio` object. Sections render in this fixed order: **Hero → About → Experience → Skills → Projects → Education → Certificates → Contact → Social Links**. Every section except Hero is optional.
 
 Images are imported as modules (`import portrait from "@/assets/portrait.webp"`) so Next can emit correct `width`/`height` and hashed filenames under a static export. Plain `/public` paths and absolute URLs also work, but skip that benefit.
 
@@ -105,6 +105,20 @@ Hidden when omitted or when `paragraphs` is `[]`.
 | `paragraphs` | `string[]` | ✅ | Each string renders as one paragraph. |
 | `highlights` | `string[]` | — | Quick-facts list beside the text. Omit to use full width. |
 
+### `experience` (optional)
+
+Work history, newest first; `[]` hides the section.
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `role` | `string` | ✅ | Job title. |
+| `company` | `string` | ✅ | Employer name. |
+| `category` | `"engineering" \| "other"` | — | Defaults to `"engineering"`. When any entry sets one, the section renders labelled groups ("Engineering", then "Other experience"); otherwise a flat list. |
+| `companyUrl` | `string` | — | Wraps the company name in a link. |
+| `period` | `string` | ✅ | Free-form, e.g. `"2022 — Present"`. |
+| `location` | `string` | — | e.g. `"Remote"`. |
+| `achievements` | `string[]` | ✅ | One-sentence impact bullets. |
+
 ### `skills` (optional)
 
 Array of groups; `[]` hides the section. Groups whose `title` contains "spoken" are excluded from the structured-data `knowsAbout` list (spoken languages are not areas of expertise).
@@ -129,20 +143,6 @@ Array of project cards; `[]` hides the section.
 | `featured` | `boolean` | — | Makes the card span the full grid width. |
 
 `GitHubRepo` is `{ url, repoType, private? }`. `repoType` labels the badge (e.g. `"Frontend"`); `private: true` renders a muted, non-clickable badge instead of a link, acknowledging the repo without sending visitors to a 404.
-
-### `experience` (optional)
-
-Work history, newest first; `[]` hides the section.
-
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `role` | `string` | ✅ | Job title. |
-| `company` | `string` | ✅ | Employer name. |
-| `category` | `"engineering" \| "other"` | — | Defaults to `"engineering"`. When any entry sets one, the section renders labelled groups ("Engineering", then "Other experience"); otherwise a flat list. |
-| `companyUrl` | `string` | — | Wraps the company name in a link. |
-| `period` | `string` | ✅ | Free-form, e.g. `"2022 — Present"`. |
-| `location` | `string` | — | e.g. `"Remote"`. |
-| `achievements` | `string[]` | ✅ | One-sentence impact bullets. |
 
 ### `education` (optional)
 
@@ -174,7 +174,7 @@ Hidden when omitted or when `email` is empty. **No form** — a `mailto:` CTA, l
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `email` | `string` | ✅ | Shown on the button and used for `mailto:`. |
-| `location` | `string` | — | e.g. `"Copenhagen, DK · CET (UTC+1)"`. The part before `·` is parsed into the structured-data address. |
+| `location` | `string` | — | e.g. `"Barcelona, ES · CET (UTC+1)"`. The part before `·` is parsed into the structured-data address. |
 | `availability` | `{ status, label }` | — | `status` controls the dot color: `"available"` → green, `"limited"` → amber, `"unavailable"` → gray. |
 | `note` | `string` | — | Short invitation sentence above the button. |
 
