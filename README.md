@@ -50,12 +50,9 @@ Files listed in [`public/.assetsignore`](public/.assetsignore) are excluded from
 
 ### Custom domain
 
-`bartzanen.com` is a zone on the same Cloudflare account, so the hostname and its DNS record are provisioned by the `routes` block in `wrangler.jsonc` — currently commented out. A hostname cannot be attached to a Pages project and a Worker simultaneously, so the cutover order matters:
+`bartzanen.com` is a zone on the same Cloudflare account, so the `routes` block in `wrangler.jsonc` provisions the hostname and its proxied apex record on deploy. Apex only — `www` has no record, and `seo.url` is the bare apex.
 
-1. `bun run deploy`, then verify the site on a preview URL.
-2. Remove `bartzanen.com` from the old Pages project's custom domains.
-3. Uncomment the `routes` block in `wrangler.jsonc` and `bun run deploy` again.
-4. Once traffic is confirmed on the Worker, delete the Pages project.
+The DNS record is managed by wrangler, not by hand: it is created on the first deploy that declares the route and released if the route is removed. The zone's other records (Email Routing MX, SPF, DKIM, the Google verification TXT) are independent of the site and unaffected by deploys.
 
 ### Environment
 
