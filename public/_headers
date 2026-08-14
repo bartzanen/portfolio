@@ -3,6 +3,27 @@
 # Like .assetsignore, this must land inside the assets directory, so it lives in
 # public/ and next build copies it into out/. Wrangler does not upload it as an
 # asset; it is read as configuration.
+#
+# Rules are additive: a file under _next/static matches both blocks below and
+# is served the headers from each.
+
+# Reach this origin over HTTPS only, for a year, and refuse to fall back to
+# http:// even if a link or a typed address asks for it.
+#
+# This is the durable half of HTTPS enforcement — it moves the upgrade into the
+# browser, so a repeat visit never puts a plaintext request on the wire to be
+# intercepted. The other half is the zone's "Always Use HTTPS" redirect, which
+# is what covers a visitor's *first* request, before any HSTS policy is cached.
+# Neither replaces the other; see "HTTPS" in README.md.
+#
+# includeSubDomains is safe here: the zone serves web content on the apex only
+# (www has no record), and Email Routing's MX/SPF records are untouched — HSTS
+# governs HTTP, not mail.
+#
+# Deliberately not `preload`. That hardcodes the domain into browser binaries
+# and takes months to unwind; a max-age expires on its own.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
 
 # Everything under _next/static is content-hashed by the build — a change to the
 # file changes its name — so it can be cached permanently. Without this, the

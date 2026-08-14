@@ -37,7 +37,15 @@
   // the hostname and its proxied apex record on deploy. Released from the old
   // Pages project first — a hostname cannot be attached to both at once.
   //
-  // Apex only: www.bartzanen.com has no record and seo.url is the bare apex.
+  // Apex only, deliberately. www.bartzanen.com is NOT attached here: it has a
+  // proxied placeholder DNS record and a zone Redirect Rule that 301s it to the
+  // apex, so the site is served from exactly one hostname and inbound links do
+  // not fork. Adding it below would serve a second identical copy instead —
+  // the same duplicate-content problem workers_dev: false avoids.
+  //
+  // That record and rule are dashboard-only; see "HTTPS and hostnames" in
+  // README.md. seo.url, the canonical tag, OG and the sitemap are all the bare
+  // apex and need no change.
   "routes": [
     { "pattern": "bartzanen.com", "custom_domain": true }
   ]

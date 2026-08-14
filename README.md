@@ -54,9 +54,33 @@ Files listed in [`public/.assetsignore`](public/.assetsignore) are excluded from
 
 ### Custom domain
 
-`bartzanen.com` is a zone on the same Cloudflare account, so the `routes` block in `wrangler.jsonc` provisions the hostname and its proxied apex record on deploy. Apex only — `www` has no record, and `seo.url` is the bare apex.
+`bartzanen.com` is a zone on the same Cloudflare account, so the `routes` block in `wrangler.jsonc` provisions the hostname and its proxied apex record on deploy. The apex is the only hostname attached to the Worker, and `seo.url` is the bare apex; `www` exists but only to redirect (below).
 
 The DNS record is managed by wrangler, not by hand: it is created on the first deploy that declares the route and released if the route is removed. The zone's other records (Email Routing MX, SPF, DKIM, the Google verification TXT) are independent of the site and unaffected by deploys.
+
+### HTTPS and hostnames
+
+The site is reachable one way only: **HTTPS on the bare apex**. Three pieces enforce that, and only the first lives in this repo.
+
+| Piece | Lives in | Covers |
+|---|---|---|
+| `Strict-Transport-Security` | [`public/_headers`](public/_headers) — deploys with the site | Every request *after* a browser has seen the header once. The browser rewrites `http://` to `https://` itself, so nothing goes out in plaintext. |
+| **Always Use HTTPS** | Cloudflare zone setting | A visitor's *first* request, when no HSTS policy is cached yet. Redirects `http://` → `https://` at the edge. |
+| **www → apex Redirect Rule** | Cloudflare zone rule + a `www` DNS record | `www.bartzanen.com`, which is otherwise a dead hostname. `301`s to the apex, preserving path and query. |
+
+The last two are dashboard-only. Wrangler's OAuth token is `zone (read)` and cannot read or write zone settings, so a deploy can neither drift them nor restore them — if they are ever lost, they are re-created by hand.
+
+`www` is deliberately **not** in the `routes` block. Attaching it to the Worker would serve the site on two hostnames, which is the same duplicate-content problem `workers_dev: false` exists to avoid; a `301` keeps one canonical URL and consolidates inbound links. Its DNS record is a *proxied placeholder* (`A` → `192.0.2.1`, a reserved test address) — nothing is ever fetched from it, because the redirect fires at the edge before any origin or Worker is consulted.
+
+HSTS is a one-year commitment: once served, browsers refuse plain HTTP for the apex *and its subdomains* until the max-age lapses. That is why `www` must answer over HTTPS — Universal SSL covers `*.bartzanen.com`, so it does. `preload` is deliberately not set; it would bake the domain into browser binaries and take months to reverse.
+
+Verifying all three:
+
+```bash
+curl -sI http://bartzanen.com/      | head -1   # 301 -> https  (Always Use HTTPS)
+curl -sI https://www.bartzanen.com/ | head -1   # 301 -> apex   (Redirect Rule)
+curl -sI https://bartzanen.com/     | grep -i strict-transport   # HSTS present
+```
 
 ### Environment
 
