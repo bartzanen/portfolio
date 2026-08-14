@@ -3,8 +3,8 @@ import { Header, type NavItem } from "@/components/Header";
 import { Hero } from "@/components/sections/Hero";
 import { About } from "@/components/sections/About";
 import { Experience } from "@/components/sections/Experience";
-import { Skills } from "@/components/sections/Skills";
 import { Projects } from "@/components/sections/Projects";
+import { Skills } from "@/components/sections/Skills";
 import { Education } from "@/components/sections/Education";
 import { Certificates } from "@/components/sections/Certificates";
 import { Contact } from "@/components/sections/Contact";
@@ -42,8 +42,8 @@ export default function Page() {
   const navItems: NavItem[] = [
     showAbout && { id: "about", label: "About" },
     showExperience && { id: "experience", label: "Experience" },
-    showSkills && { id: "skills", label: "Skills" },
     showProjects && { id: "projects", label: "Projects" },
+    showSkills && { id: "skills", label: "Skills" },
     showEducation && { id: "education", label: "Education" },
     showCertificates && { id: "certificates", label: "Certificates" },
     showContact && { id: "contact", label: "Contact" },
@@ -57,8 +57,8 @@ export default function Page() {
         <Hero data={hero} />
         {showAbout && <About data={about} />}
         {showExperience && <Experience data={experience} />}
-        {showSkills && <Skills data={skills} />}
         {showProjects && <Projects data={projects} />}
+        {showSkills && <Skills data={skills} />}
         {showEducation && <Education data={education} />}
         {showCertificates && <Certificates data={certificates} />}
         {showContact && <Contact data={contact} />}
