@@ -1,0 +1,44 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio",
+  "compatibility_date": "2026-08-14",
+
+  // No `main`: this is an assets-only Worker. Cloudflare serves `out/` straight
+  // from the asset layer, so no Worker code runs and no invocations are billed.
+  // Adding a `main` entrypoint later is what unlocks dynamic routing.
+  "assets": {
+    "directory": "./out",
+
+    // `next build` with `output: "export"` emits `<route>/index.html`, so
+    // /about redirects to /about/ rather than 404ing.
+    "html_handling": "auto-trailing-slash",
+
+    // Serve the exported out/404.html with a real 404 status. Deliberately not
+    // "single-page-application", which would answer every unknown URL with
+    // index.html and a 200 — bad for SEO on a statically exported site.
+    "not_found_handling": "404-page"
+  },
+
+  "observability": { "enabled": true },
+
+  // Off: the site is reached at bartzanen.com, and a permanent second copy at
+  // portfolio.<subdomain>.workers.dev is just duplicate content. Wrangler already
+  // disables this by default once a route exists — stated here so it is a
+  // decision rather than a default that could change.
+  "workers_dev": false,
+
+  // On: gives <version>-portfolio.<subdomain>.workers.dev, so a build can be
+  // checked on the real edge before it is promoted. Defaults to false.
+  //   wrangler versions upload   -> uploads, prints a preview URL, stays off prod
+  //   wrangler versions deploy   -> promotes that version to bartzanen.com
+  "preview_urls": true,
+
+  // bartzanen.com is a zone on this Cloudflare account, so wrangler provisions
+  // the hostname and its proxied apex record on deploy. Released from the old
+  // Pages project first — a hostname cannot be attached to both at once.
+  //
+  // Apex only: www.bartzanen.com has no record and seo.url is the bare apex.
+  "routes": [
+    { "pattern": "bartzanen.com", "custom_domain": true }
+  ]
+}

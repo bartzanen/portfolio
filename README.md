@@ -1,6 +1,6 @@
 # bartzanen.com
 
-My personal portfolio — a single-page site built with **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS** and **Framer Motion**, statically exported and hosted on **Cloudflare Pages**.
+My personal portfolio — a single-page site built with **Next.js 15 (App Router)**, **TypeScript**, **Tailwind CSS** and **Framer Motion**, statically exported and served from a **Cloudflare Worker**.
 
 The whole page is generated from one typed config object: [`src/data/portfolio.ts`](src/data/portfolio.ts). Sections whose data is missing or empty disappear from the page *and* from the header nav automatically, so content changes never require touching a component.
 
@@ -17,26 +17,52 @@ The whole page is generated from one typed config object: [`src/data/portfolio.t
 ## Scripts
 
 ```bash
-npm install
-npm run dev        # http://localhost:3000
-npm run build      # static export → out/
-npm run lint       # eslint (next/core-web-vitals + next/typescript)
-npm run typecheck  # tsc --noEmit
+bun install
+bun run dev        # http://localhost:3000
+bun run build      # static export → out/
+bun run preview    # build, then serve out/ through the Worker runtime locally
+bun run deploy     # build, then wrangler deploy
+bun run lint       # eslint (next/core-web-vitals + next/typescript)
+bun run typecheck  # tsc --noEmit
 ```
 
-There is no `npm start`: `output: "export"` means `next start` does not apply. To preview a production build locally, serve the export directly:
+The package manager is **bun**; `bun.lock` is the tracked lockfile. Keep it that way — Cloudflare Workers Builds picks its package manager from whichever lockfile it finds, so a stray `package-lock.json` would make CI install with npm while you develop against bun.
 
-```bash
-npx serve out
-```
+There is no `start` script: `output: "export"` means `next start` does not apply. Use `bun run preview` to see a production build — it runs the export behind `wrangler dev`, so trailing-slash handling and 404s behave exactly as they do in production.
 
 ## Deployment
 
-Cloudflare Pages builds with `npm run build` and publishes `out/`.
+Served by an **assets-only Cloudflare Worker**: [`wrangler.jsonc`](wrangler.jsonc) declares `out/` as the asset directory and no `main` entrypoint, so Cloudflare serves the files from its asset layer without ever invoking Worker code. Adding a `main` script is what would turn this into a dynamic Worker.
+
+`bun run deploy` builds and uploads straight to production. CI (Workers Builds or GitHub Actions) should run the same two steps.
+
+`bun run preview` is the normal way to check a change first. It serves the export through workerd — the runtime Cloudflare itself runs — so asset routing, `_headers`, `.assetsignore` and 404 handling behave exactly as in production, not approximately.
+
+What it cannot do is hand you a URL. For the cases that need one — checking the layout on a phone, sending it to someone before it is public — upload a version without pointing the domain at it:
+
+```bash
+bun run build
+bunx wrangler versions upload   # prints e.g. https://d9bb9a29-portfolio.<subdomain>.workers.dev
+bunx wrangler versions deploy   # promote that version to bartzanen.com
+```
+
+Every upload is an immutable *version*; a *deployment* is which version `bartzanen.com` points at. `bun run deploy` does both in one step, which is usually what you want.
+
+`workers_dev` is off, so there is no permanent second copy of the site at a `workers.dev` address. `preview_urls` is on, so the per-version URLs above work.
+
+Files listed in [`public/.assetsignore`](public/.assetsignore) are excluded from upload. It lives in `public/` because the exclude list has to end up *inside* the assets directory, and `next build` copies `public/` into `out/` verbatim.
+
+### Custom domain
+
+`bartzanen.com` is a zone on the same Cloudflare account, so the `routes` block in `wrangler.jsonc` provisions the hostname and its proxied apex record on deploy. Apex only — `www` has no record, and `seo.url` is the bare apex.
+
+The DNS record is managed by wrangler, not by hand: it is created on the first deploy that declares the route and released if the route is removed. The zone's other records (Email Routing MX, SPF, DKIM, the Google verification TXT) are independent of the site and unaffected by deploys.
+
+### Environment
 
 | Environment variable | Required | Purpose |
 |---|---|---|
-| `NEXT_PUBLIC_CF_BEACON_TOKEN` | — | Cloudflare Web Analytics beacon token. Set in the Pages dashboard; when absent the script is omitted entirely, so local and preview builds stay untracked. |
+| `NEXT_PUBLIC_CF_BEACON_TOKEN` | — | Cloudflare Web Analytics beacon token. Inlined at build time, so it must be set wherever the build runs; when absent the script is omitted entirely, so local and preview builds stay untracked. |
 
 See [`.env.example`](.env.example). Keep `seo.url` pointed at the production domain — Open Graph URLs, the canonical link, the sitemap and `robots.txt` all derive from it.
 
