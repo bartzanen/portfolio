@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, FileText } from "lucide-react";
 import Image from "next/image";
 import type { Hero as HeroData } from "@/types/portfolio";
 
@@ -61,17 +61,42 @@ export function Hero({ data }: { data: HeroData }) {
             </motion.p>
           )}
 
-          {data.cta && (
-            <motion.div {...enter(0.32)} className="mt-9">
-              <motion.a
-                href={data.cta.href}
-                whileHover={reduce ? undefined : { y: -3 }}
-                transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                className="inline-flex items-center gap-2 rounded-full bg-teal-700 px-6 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-teal-600 dark:bg-teal-500 dark:text-zinc-950 dark:hover:bg-teal-400"
-              >
-                {data.cta.label}
-                <ArrowDown className="h-4 w-4" aria-hidden="true" />
-              </motion.a>
+          {(data.cta || data.secondaryCta) && (
+            <motion.div
+              {...enter(0.32)}
+              className="mt-9 flex flex-wrap items-center gap-3"
+            >
+              {data.cta && (
+                <motion.a
+                  href={data.cta.href}
+                  whileHover={reduce ? undefined : { y: -3 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                  className="inline-flex items-center gap-2 rounded-full bg-teal-700 px-6 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-teal-600 dark:bg-teal-500 dark:text-zinc-950 dark:hover:bg-teal-400"
+                >
+                  {data.cta.label}
+                  <ArrowDown className="h-4 w-4" aria-hidden="true" />
+                </motion.a>
+              )}
+
+              {data.secondaryCta && (
+                <motion.a
+                  href={data.secondaryCta.href}
+                  target={
+                    data.secondaryCta.href.startsWith("#") ? undefined : "_blank"
+                  }
+                  rel={
+                    data.secondaryCta.href.startsWith("#")
+                      ? undefined
+                      : "noopener noreferrer"
+                  }
+                  whileHover={reduce ? undefined : { y: -3 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                  className="inline-flex items-center gap-2 rounded-full border border-stone-300 px-6 py-3 text-sm font-medium text-stone-700 transition-colors hover:border-teal-600/50 hover:text-teal-700 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-teal-400/50 dark:hover:text-teal-400"
+                >
+                  <FileText className="h-4 w-4" aria-hidden="true" />
+                  {data.secondaryCta.label}
+                </motion.a>
+              )}
             </motion.div>
           )}
         </div>

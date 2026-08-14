@@ -47,9 +47,15 @@ export const portfolio: Portfolio = {
     name: "Bart Zanen",
     headline: "Full-Stack Software Engineer",
     eyebrow: "Based in Copenhagen",
+    tagline:
+      "I build full-stack web apps with AI in the stack — from fine-tuned on-device models to the interface around them. Currently co-founding Journii, and open to full-time roles.",
     cta: {
       label: "See my work",
       href: "#projects", // anchors scroll smoothly; mailto: and https:// also work
+    },
+    secondaryCta: {
+      label: "Download CV",
+      href: "/Bart_Zanen_CV.pdf",
     },
     portrait: portrait,
   },
@@ -58,7 +64,7 @@ export const portfolio: Portfolio = {
     paragraphs: [
       "I'm a software engineer who likes building things end to end, from the database up to the interface someone actually clicks on. My happy place is full-stack web development, especially when AI is part of the stack. I've spent the last couple of years getting hands-on experience building AI-adjacent tooling, which I think is becoming essential in this field.",
       "While studying Computer Science at UPC in Barcelona, I spent six months on exchange in Bergen, Norway. After it ended, I chose to stay a while longer, finishing my thesis remotely and working as a Head Waiter leading a team at a high-volume restaurant to support myself in the meantime.",
-      "Once I wrapped up my degree, I took a few months to backpack through Southeast Asia, meeting people building all kinds of remote and independent careers along the way. I came back wanting to keep on learning and building, and curious about where I would end up next",
+      "Once I wrapped up my degree, I took a few months to backpack through Southeast Asia, meeting people building all kinds of remote and independent careers along the way. I came back wanting to keep learning and building — which is what I'm doing now, co-founding Journii and shipping side projects like Dici to stay close to the parts of this field that are moving fastest.",
     ],
     // Short facts shown as a compact side list. Omit or empty to hide.
     highlights: [
@@ -162,15 +168,17 @@ export const portfolio: Portfolio = {
     {
       title: "Journii",
       description:
-        "A social platform for Erasmus students, combining a social feed, event discovery, and connections to help students meet others nearby and make the most of their exchange. Being built as a mobile app and webapp with a friend, currently in early development.",
+        "A social platform for Erasmus students combining a social feed, event discovery, and nearby connections, so students can make the most of their exchange. I co-founded it and built the core of both clients — a Next.js web app and an Expo mobile app sharing UI components, types, and themes through an internal package system, deployed on Cloudflare via CI/CD.",
       tags: [
         "React Native",
         "Expo",
         "Next.js",
         "Supabase",
-        "Mobile",
-        "Social Platform",
+        "Monorepo",
+        "CI/CD",
+        "Cloudflare",
       ],
+      liveUrl: "https://journiiapp.com",
       githubUrls: [
         {
           url: "https://github.com/journii-app/journii-mobile",
@@ -226,9 +234,35 @@ export const portfolio: Portfolio = {
 
   experience: [
     {
+      role: "Co-Founder",
+      company: "Journii",
+      companyUrl: "https://journiiapp.com",
+      category: "engineering",
+      period: "Jun 2026 — Present",
+      location: "Remote",
+      achievements: [
+        "Architected and developed core software for two applications (Next.js web, Expo mobile), establishing monorepo structure, CI/CD, and Cloudflare deployment.",
+        "Built an internal GitHub package system centralizing UI components, types, and themes for reuse across all applications.",
+      ],
+    },
+    {
+      role: "Junior Full-Stack Developer",
+      company: "Rosepetal",
+      companyUrl: "https://www.rosepetal.ai/",
+      category: "engineering",
+      period: "Apr 2024 — Jan 2025",
+      location: "Sabadell, ES",
+      achievements: [
+        "Built an AI-assisted dataset labeling tool integrated into the internal editor, improving labeling efficiency by 35%.",
+        "Developed and improved software for AI-driven quality control systems, supporting automated defect detection and process monitoring on industrial production lines.",
+        "Identified and resolved performance bottlenecks across the application, improving responsiveness and overall system stability.",
+      ],
+    },
+    {
       role: "Head Waiter",
       company: "Villa Paradiso",
       companyUrl: "https://www.villaparadiso.no/",
+      category: "other",
       period: "Apr 2025 — Jan 2026",
       location: "Bergen, NO",
       achievements: [
@@ -239,20 +273,9 @@ export const portfolio: Portfolio = {
       ],
     },
     {
-      role: "Junior Full-Stack Developer",
-      company: "Rosepetal",
-      companyUrl: "https://www.rosepetal.ai/",
-      period: "Apr 2024 — Jan 2025",
-      location: "Sabadell, ES",
-      achievements: [
-        "Built an AI-assisted dataset labeling tool integrated into the internal editor, improving labeling efficiency by 35%.",
-        "Developed and improved software for AI-driven quality control systems, supporting automated defect detection and process monitoring on industrial production lines.",
-        "Identified and resolved performance bottlenecks across the application, improving responsiveness and overall system stability.",
-      ],
-    },
-    {
       role: "Tour Guide",
       company: "Self-Employed",
+      category: "other",
       period: "May 2024 — Sep 2024",
       location: "Barcelona, ES",
       achievements: [
@@ -266,6 +289,7 @@ export const portfolio: Portfolio = {
       company: "FieldHockeyTravel.com",
       companyUrl:
         "https://www.fieldhockeytravel.com/pg-28957-7-114462/pagina/home.html",
+      category: "other",
       period: "Feb 2023 — Feb 2024",
       location: "Barcelona, ES",
       achievements: [
@@ -310,24 +334,6 @@ export const portfolio: Portfolio = {
       tags: ["Deep Learning", "Keras", "TensorFlow", "CNNs", "Transformers"],
     },
     {
-      title: "Deep Learning with Keras and TensorFlow",
-      issuer: "Coursera",
-      date: "Jul 2026",
-      credentialUrl:
-        "https://coursera.org/share/580862751aa2d62f27b5a188c4348043",
-      imageUrl: certifcate_ibm_logo,
-      tags: ["Deep Learning", "Keras", "TensorFlow"],
-    },
-    {
-      title: "Introduction to Deep Learning & Neural Networks with Keras",
-      issuer: "Coursera",
-      date: "Jun 2026",
-      credentialUrl:
-        "https://coursera.org/share/d743e47ec50b3cb606118ff05a28614b",
-      imageUrl: certifcate_ibm_logo,
-      tags: ["Deep Learning", "Neural Networks", "Keras"],
-    },
-    {
       title: "Machine Learning with Python",
       issuer: "Coursera",
       date: "Jun 2026",
@@ -359,11 +365,6 @@ export const portfolio: Portfolio = {
       platform: "linkedin",
       label: "LinkedIn",
       url: "https://www.linkedin.com/in/bart-sebastiaan-zanen",
-    },
-    {
-      platform: "whatsapp",
-      label: "WhatsApp",
-      url: "https://wa.me/34674761307",
     },
     {
       platform: "calendly",

@@ -42,6 +42,15 @@ export interface Hero {
     /** Anchor ("#projects"), mailto, or external URL. */
     href: string;
   };
+  /**
+   * Optional secondary call-to-action, rendered as an outline button beside
+   * the primary one. Use it for the thing a recruiter wants immediately —
+   * typically the CV.
+   */
+  secondaryCta?: {
+    label: string;
+    href: string;
+  };
   /** Portrait photo — path under /public or an absolute URL. Omit to hide. */
   portrait?: string | StaticImageData;
 }
@@ -93,9 +102,18 @@ export interface Project {
   featured?: boolean;
 }
 
+/**
+ * Groups the Experience list. When any entry sets a category, the section
+ * renders labelled groups ("Engineering" first, then "Other experience");
+ * when none do, it renders as a single flat list.
+ */
+export type ExperienceCategory = "engineering" | "other";
+
 export interface ExperienceItem {
   role: string;
   company: string;
+  /** Which group this role belongs to. Defaults to "engineering". */
+  category?: ExperienceCategory;
   /** Optional link wrapped around the company name. */
   companyUrl?: string;
   /** Free-form, e.g. "2022 — Present" or "Mar 2020 – Jun 2021". */
