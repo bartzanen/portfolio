@@ -66,6 +66,12 @@ export interface SkillGroup {
 export type GitHubRepo = {
   url: string;
   repoType: string;
+  /**
+   * Marks the repository as private. Private repos render as a muted,
+   * non-clickable badge instead of a link — the source is acknowledged as
+   * real without sending visitors to a 404.
+   */
+  private?: boolean;
 };
 
 export interface Project {

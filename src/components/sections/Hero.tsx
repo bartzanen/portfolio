@@ -67,8 +67,7 @@ export function Hero({ data }: { data: HeroData }) {
                 href={data.cta.href}
                 whileHover={reduce ? undefined : { y: -3 }}
                 transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                className="inline-flex items-center gap-2 rounded-full bg-teal-700 px-6 py-3 text-sm font-medium text-white sha
-         dow-sm transition-colors hover:bg-teal-600 dark:bg-teal-500 dark:text-zinc-950 dark:hover:bg-teal-400"
+                className="inline-flex items-center gap-2 rounded-full bg-teal-700 px-6 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-teal-600 dark:bg-teal-500 dark:text-zinc-950 dark:hover:bg-teal-400"
               >
                 {data.cta.label}
                 <ArrowDown className="h-4 w-4" aria-hidden="true" />

@@ -1,7 +1,6 @@
 import certificate_advanced_deep_learning_specialist from "@/assets/advanced-deep-learning-specialist.png";
 import certifcate_ibm_logo from "@/assets/ibm_logo.jpeg";
 import portrait from "@/assets/portrait.png";
-import project_bartinbarcelona from "@/assets/bartinbarcelona.png";
 import project_pulmonurbano from "@/assets/pulmonurbano.png";
 import project_dici from "@/assets/dici.png";
 
@@ -176,10 +175,12 @@ export const portfolio: Portfolio = {
         {
           url: "https://github.com/journii-app/journii-mobile",
           repoType: "Mobile",
+          private: true,
         },
         {
           url: "https://github.com/journii-app/journii-web",
           repoType: "Web",
+          private: true,
         },
       ],
     },
@@ -192,6 +193,7 @@ export const portfolio: Portfolio = {
         {
           url: "https://github.com/marcoriol/AIGILE",
           repoType: "Code",
+          private: true,
         },
       ],
     },
@@ -219,20 +221,6 @@ export const portfolio: Portfolio = {
         },
       ],
       imageUrl: project_pulmonurbano,
-    },
-    {
-      title: "BartInBarcelona",
-      description:
-        "The official website for my bike tour guide business in Barcelona. A simple, fast-loading site covering tour listings, booking, and contact info, built from scratch with PHP and CSS. A past project, since I'm no longer running the tours.",
-      tags: ["PHP", "CSS", "Web Design"],
-      liveUrl: "",
-      githubUrls: [
-        {
-          url: "https://github.com/bartzanen/BartInBarcelona",
-          repoType: "Code",
-        },
-      ],
-      imageUrl: project_bartinbarcelona,
     },
   ],
 
