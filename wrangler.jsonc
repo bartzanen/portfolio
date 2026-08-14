@@ -19,17 +19,14 @@
     "not_found_handling": "404-page"
   },
 
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
 
-  // Custom domain. bartzanen.com is already a zone on this Cloudflare account,
-  // so wrangler can provision the hostname and its DNS record on deploy.
+  // bartzanen.com is a zone on this Cloudflare account, so wrangler provisions
+  // the hostname and its proxied apex record on deploy. Released from the old
+  // Pages project first — a hostname cannot be attached to both at once.
   //
-  // Keep this commented until the domain has been REMOVED from the old Pages
-  // project — a hostname cannot be attached to a Pages project and a Worker at
-  // the same time, and the Pages side keeps serving until it is released.
-  // Then uncomment (and add the comma after "observability" above) and deploy.
-  //
-  // "routes": [
-  //   { "pattern": "bartzanen.com", "custom_domain": true }
-  // ]
+  // Apex only: www.bartzanen.com has no record and seo.url is the bare apex.
+  "routes": [
+    { "pattern": "bartzanen.com", "custom_domain": true }
+  ]
 }
