@@ -21,6 +21,18 @@
 
   "observability": { "enabled": true },
 
+  // Off: the site is reached at bartzanen.com, and a permanent second copy at
+  // portfolio.<subdomain>.workers.dev is just duplicate content. Wrangler already
+  // disables this by default once a route exists — stated here so it is a
+  // decision rather than a default that could change.
+  "workers_dev": false,
+
+  // On: gives <version>-portfolio.<subdomain>.workers.dev, so a build can be
+  // checked on the real edge before it is promoted. Defaults to false.
+  //   wrangler versions upload   -> uploads, prints a preview URL, stays off prod
+  //   wrangler versions deploy   -> promotes that version to bartzanen.com
+  "preview_urls": true,
+
   // bartzanen.com is a zone on this Cloudflare account, so wrangler provisions
   // the hostname and its proxied apex record on deploy. Released from the old
   // Pages project first — a hostname cannot be attached to both at once.

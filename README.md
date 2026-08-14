@@ -34,7 +34,17 @@ There is no `start` script: `output: "export"` means `next start` does not apply
 
 Served by an **assets-only Cloudflare Worker**: [`wrangler.jsonc`](wrangler.jsonc) declares `out/` as the asset directory and no `main` entrypoint, so Cloudflare serves the files from its asset layer without ever invoking Worker code. Adding a `main` script is what would turn this into a dynamic Worker.
 
-`bun run deploy` builds and uploads. CI (Workers Builds or GitHub Actions) should run the same two steps.
+`bun run deploy` builds and uploads straight to production. CI (Workers Builds or GitHub Actions) should run the same two steps.
+
+To check a build on the real edge before it goes live — the nearest replacement for Pages' per-branch previews:
+
+```bash
+bun run build
+bunx wrangler versions upload   # prints a <version>-portfolio.<subdomain>.workers.dev URL
+bunx wrangler versions deploy   # promote that version to bartzanen.com
+```
+
+`workers_dev` is off, so there is no permanent second copy of the site at a `workers.dev` address; `preview_urls` is on, so per-version URLs still work.
 
 Files listed in [`public/.assetsignore`](public/.assetsignore) are excluded from upload. It lives in `public/` because the exclude list has to end up *inside* the assets directory, and `next build` copies `public/` into `out/` verbatim.
 
@@ -42,7 +52,7 @@ Files listed in [`public/.assetsignore`](public/.assetsignore) are excluded from
 
 `bartzanen.com` is a zone on the same Cloudflare account, so the hostname and its DNS record are provisioned by the `routes` block in `wrangler.jsonc` — currently commented out. A hostname cannot be attached to a Pages project and a Worker simultaneously, so the cutover order matters:
 
-1. `bun run deploy`, then verify the site on the `*.workers.dev` URL.
+1. `bun run deploy`, then verify the site on a preview URL.
 2. Remove `bartzanen.com` from the old Pages project's custom domains.
 3. Uncomment the `routes` block in `wrangler.jsonc` and `bun run deploy` again.
 4. Once traffic is confirmed on the Worker, delete the Pages project.
