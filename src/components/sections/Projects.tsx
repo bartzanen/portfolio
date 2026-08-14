@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink, Github, Lock } from "lucide-react";
 import type { Project } from "@/types/portfolio";
 import { Section, Tag } from "@/components/ui/Section";
 import { HoverLift, Stagger, StaggerItem } from "@/components/motion/Reveal";
@@ -12,8 +12,20 @@ function slugify(title: string): string {
     .replace(/(^-|-$)/g, "");
 }
 
+/**
+ * True for taller-than-wide images (e.g. phone screenshots). Only knowable
+ * for statically imported images, which carry their intrinsic dimensions.
+ */
+function isPortraitImage(src: Project["imageUrl"]): boolean {
+  return typeof src === "object" && src !== null && src.height > src.width;
+}
+
 function ProjectImage({ project }: { project: Project }) {
   if (project.imageUrl) {
+    // Portrait sources are letterboxed rather than cropped — `object-cover`
+    // on a 16/9 frame would reduce a phone screenshot to a thin middle slice.
+    const portrait = isPortraitImage(project.imageUrl);
+
     return (
       <div className="relative aspect-[16/9] overflow-hidden bg-stone-100 dark:bg-zinc-900">
         <Image
@@ -21,7 +33,7 @@ function ProjectImage({ project }: { project: Project }) {
           alt={`Screenshot of ${project.title}`}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 480px"
-          className="object-cover"
+          className={portrait ? "object-contain py-3" : "object-cover"}
         />
       </div>
     );
@@ -50,7 +62,7 @@ function ProjectCard({ project }: { project: Project }) {
           <h3 className="font-display text-lg font-semibold text-stone-900 dark:text-zinc-50">
             {project.title}
           </h3>
-          <p className="flex-1 text-sm leading-relaxed text-justify">
+          <p className="flex-1 text-sm leading-relaxed">
             {project.description}
           </p>
 
@@ -65,7 +77,7 @@ function ProjectCard({ project }: { project: Project }) {
           )}
 
           {(project.liveUrl || project.githubUrls) && (
-            <div className="mt-1 flex gap-2">
+            <div className="mt-1 flex flex-wrap gap-2">
               {project.liveUrl && (
                 <a
                   href={project.liveUrl}
@@ -78,18 +90,31 @@ function ProjectCard({ project }: { project: Project }) {
                 </a>
               )}
               {project.githubUrls &&
-                project.githubUrls.map((githubUrl) => (
-                  <a
-                    key={githubUrl.repoType}
-                    href={githubUrl.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-700 transition-colors hover:border-teal-600/50 hover:text-teal-700 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-teal-400/50 dark:hover:text-teal-400"
-                  >
-                    <Github className="h-3.5 w-3.5" aria-hidden="true" />
-                    {githubUrl.repoType}
-                  </a>
-                ))}
+                project.githubUrls.map((githubUrl) =>
+                  githubUrl.private ? (
+                    // Private source: shown, but never linked — a link here
+                    // would 404 for anyone not on the repo.
+                    <span
+                      key={githubUrl.repoType}
+                      title="This repository is private"
+                      className="inline-flex cursor-default items-center gap-1.5 whitespace-nowrap rounded-full border border-dashed border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-500 dark:border-zinc-700 dark:text-zinc-500"
+                    >
+                      <Lock className="h-3.5 w-3.5" aria-hidden="true" />
+                      {githubUrl.repoType} · Private
+                    </span>
+                  ) : (
+                    <a
+                      key={githubUrl.repoType}
+                      href={githubUrl.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-stone-300 px-4 py-1.5 text-xs font-medium text-stone-700 transition-colors hover:border-teal-600/50 hover:text-teal-700 dark:border-zinc-700 dark:text-zinc-300 dark:hover:border-teal-400/50 dark:hover:text-teal-400"
+                    >
+                      <Github className="h-3.5 w-3.5" aria-hidden="true" />
+                      {githubUrl.repoType}
+                    </a>
+                  ),
+                )}
             </div>
           )}
         </div>

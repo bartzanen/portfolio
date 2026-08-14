@@ -12,7 +12,7 @@ export function About({ data }: { data: AboutData }) {
       >
         <Reveal delay={0.05} className="space-y-5">
           {data.paragraphs.map((paragraph, i) => (
-            <p key={i} className="leading-relaxed text-justify">
+            <p key={i} className="leading-relaxed">
               {paragraph}
             </p>
           ))}
