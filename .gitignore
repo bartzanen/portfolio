@@ -1,6 +1,9 @@
 node_modules
 .next
 out
+
+# Wrangler local dev state (miniflare cache, observability traces)
+.wrangler
 .env*.local
 .vercel
 *.tsbuildinfo

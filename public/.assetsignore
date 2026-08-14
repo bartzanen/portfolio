@@ -1,0 +1,11 @@
+# Excluded from the Cloudflare asset upload. Same syntax as .gitignore.
+#
+# This file must sit in the assets directory (out/), not the repo root — so it
+# lives in public/, which `next build` copies verbatim into out/. Wrangler skips
+# uploading the .assetsignore file itself.
+
+# macOS artifact; appears in public/ on local machines and rides along into out/.
+.DS_Store
+
+# Source maps: not needed to serve the site, and they expose the sources.
+*.map
