@@ -17,22 +17,24 @@ The whole page is generated from one typed config object: [`src/data/portfolio.t
 ## Scripts
 
 ```bash
-npm install
-npm run dev        # http://localhost:3000
-npm run build      # static export → out/
-npm run preview    # build, then serve out/ through the Worker runtime locally
-npm run deploy     # build, then wrangler deploy
-npm run lint       # eslint (next/core-web-vitals + next/typescript)
-npm run typecheck  # tsc --noEmit
+bun install
+bun run dev        # http://localhost:3000
+bun run build      # static export → out/
+bun run preview    # build, then serve out/ through the Worker runtime locally
+bun run deploy     # build, then wrangler deploy
+bun run lint       # eslint (next/core-web-vitals + next/typescript)
+bun run typecheck  # tsc --noEmit
 ```
 
-There is no `npm start`: `output: "export"` means `next start` does not apply. Use `npm run preview` to see a production build — it runs the export behind `wrangler dev`, so trailing-slash handling and 404s behave exactly as they do in production.
+The package manager is **bun**; `bun.lock` is the tracked lockfile. Keep it that way — Cloudflare Workers Builds picks its package manager from whichever lockfile it finds, so a stray `package-lock.json` would make CI install with npm while you develop against bun.
+
+There is no `start` script: `output: "export"` means `next start` does not apply. Use `bun run preview` to see a production build — it runs the export behind `wrangler dev`, so trailing-slash handling and 404s behave exactly as they do in production.
 
 ## Deployment
 
 Served by an **assets-only Cloudflare Worker**: [`wrangler.jsonc`](wrangler.jsonc) declares `out/` as the asset directory and no `main` entrypoint, so Cloudflare serves the files from its asset layer without ever invoking Worker code. Adding a `main` script is what would turn this into a dynamic Worker.
 
-`npm run deploy` builds and uploads. CI (Workers Builds or GitHub Actions) should run the same two steps.
+`bun run deploy` builds and uploads. CI (Workers Builds or GitHub Actions) should run the same two steps.
 
 Files listed in [`public/.assetsignore`](public/.assetsignore) are excluded from upload. It lives in `public/` because the exclude list has to end up *inside* the assets directory, and `next build` copies `public/` into `out/` verbatim.
 
@@ -40,9 +42,9 @@ Files listed in [`public/.assetsignore`](public/.assetsignore) are excluded from
 
 `bartzanen.com` is a zone on the same Cloudflare account, so the hostname and its DNS record are provisioned by the `routes` block in `wrangler.jsonc` — currently commented out. A hostname cannot be attached to a Pages project and a Worker simultaneously, so the cutover order matters:
 
-1. `npm run deploy`, then verify the site on the `*.workers.dev` URL.
+1. `bun run deploy`, then verify the site on the `*.workers.dev` URL.
 2. Remove `bartzanen.com` from the old Pages project's custom domains.
-3. Uncomment the `routes` block in `wrangler.jsonc` and `npm run deploy` again.
+3. Uncomment the `routes` block in `wrangler.jsonc` and `bun run deploy` again.
 4. Once traffic is confirmed on the Worker, delete the Pages project.
 
 ### Environment
